@@ -5,13 +5,13 @@ namespace App\Filament\Resources;
 use App\Filament\Resources\RoleResource\Pages;
 use App\Filament\Resources\RoleResource\RelationManagers;
 use App\Models\Role;
-use Filament\Forms;
+use Filament\Forms\Components\TextInput;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
+use Filament\Support\Enums\MaxWidth;
 use Filament\Tables;
+use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
-use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\SoftDeletingScope;
 
 class RoleResource extends Resource
 {
@@ -23,7 +23,10 @@ class RoleResource extends Resource
     {
         return $form
             ->schema([
-                //
+                TextInput::make('name')
+                    ->required(),
+                TextInput::make('guard_name')
+                    ->required()
             ]);
     }
 
@@ -31,13 +34,17 @@ class RoleResource extends Resource
     {
         return $table
             ->columns([
-                //
+                TextColumn::make('name')
+                    ->searchable(),
+                TextColumn::make('guard_name')
+                    ->searchable()
             ])
             ->filters([
                 //
             ])
             ->actions([
-                Tables\Actions\EditAction::make(),
+                Tables\Actions\EditAction::make()
+                    ->modalWidth(MaxWidth::Medium),
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
@@ -57,8 +64,6 @@ class RoleResource extends Resource
     {
         return [
             'index' => Pages\ListRoles::route('/'),
-            'create' => Pages\CreateRole::route('/create'),
-            'edit' => Pages\EditRole::route('/{record}/edit'),
         ];
     }
 }
