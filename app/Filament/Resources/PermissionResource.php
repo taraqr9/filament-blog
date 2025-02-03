@@ -5,7 +5,9 @@ namespace App\Filament\Resources;
 use App\Filament\Resources\PermissionResource\Pages;
 use App\Filament\Resources\PermissionResource\RelationManagers;
 use App\Models\Permission;
-use Filament\Forms;
+use Filament\Forms\Components\Actions\Action;
+use Filament\Forms\Components\CheckboxList;
+use Filament\Forms\Components\Section;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
@@ -13,8 +15,6 @@ use Filament\Support\Enums\MaxWidth;
 use Filament\Tables;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
-use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\SoftDeletingScope;
 
 class PermissionResource extends Resource
 {
@@ -30,8 +30,19 @@ class PermissionResource extends Resource
                     ->required(),
                 TextInput::make('guard_name')
                     ->required(),
+                Section::make('Permissions') // Wrap in a section for better layout
+                ->schema([
+                    CheckboxList::make('permissions')
+                        ->options([
+                            'list' => 'List',
+                            'create' => 'Create',
+                            'edit' => 'Edit',
+                            'delete' => 'Delete',
+                        ])
+                        ->columns(2),
+                ]),
             ])
-            ->columns(1);
+            ->columns(2);
     }
 
     public static function table(Table $table): Table
