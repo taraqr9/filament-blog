@@ -15,6 +15,7 @@ use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
+use STS\FilamentImpersonate\Tables\Actions\Impersonate;
 
 class UserResource extends Resource
 {
@@ -32,12 +33,13 @@ class UserResource extends Resource
                     TextInput::make('email')
                         ->email()->unique(ignoreRecord: true)->required(),
                     TextInput::make('phone')
-                        ->tel()->required(),
+                        ->tel(),
                     Select::make('roles')
                         ->relationship('roles', 'name')
                         ->multiple()
                         ->preload()
-                        ->searchable(),
+                        ->searchable()
+                        ->required(),
                 ])->columns(2),
                 Section::make([
                     TextInput::make('password')
@@ -76,6 +78,9 @@ class UserResource extends Resource
                 //
             ])
             ->actions([
+                Impersonate::make()
+                    ->color('info')
+                    ->redirectTo('/admin'),
                 Tables\Actions\EditAction::make(),
             ])
             ->bulkActions([
