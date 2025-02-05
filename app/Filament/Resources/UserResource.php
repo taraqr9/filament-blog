@@ -2,24 +2,20 @@
 
 namespace App\Filament\Resources;
 
-use App\Enums\Gender;
-use App\Enums\IdentityType;
 use App\Enums\UserStatus;
 use App\Filament\Resources\UserResource\Pages;
-use App\Filament\Resources\UserResource\RelationManagers;
 use App\Filament\Table\Columns\StatusColumn;
 use App\Models\User;
-use Filament\Forms;
 use Filament\Forms\Components\Radio;
 use Filament\Forms\Components\Section;
+use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
-use Filament\Tables\Columns\IconColumn;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
-use Illuminate\Database\Eloquent\Model;
+use STS\FilamentImpersonate\Tables\Actions\Impersonate;
 
 class UserResource extends Resource
 {
@@ -37,19 +33,24 @@ class UserResource extends Resource
                     TextInput::make('email')
                         ->email()->unique(ignoreRecord: true)->required(),
                     TextInput::make('phone')
-                        ->columnSpanFull()
-                        ->tel()->required(),
+                        ->tel(),
+                    Select::make('roles')
+                        ->relationship('roles', 'name')
+                        ->multiple()
+                        ->preload()
+                        ->searchable()
+                        ->required(),
                 ])->columns(2),
                 Section::make([
                     TextInput::make('password')
-                        ->required(fn(?User $record) => !$record?->exists)
-                        ->dehydrated(fn($state) => !empty($state))
+                        ->required(fn (?User $record) => ! $record?->exists)
+                        ->dehydrated(fn ($state) => ! empty($state))
                         ->password()->confirmed(),
                     TextInput::make('password_confirmation')
                         ->label('Confirm Password')
                         ->dehydrated(false)
                         ->same('password')
-                        ->required(fn(?User $record) => !$record?->exists)->password(),
+                        ->required(fn (?User $record) => ! $record?->exists)->password(),
                 ])->columns(2),
                 Radio::make('status')
                     ->options(UserStatus::class)
@@ -70,13 +71,16 @@ class UserResource extends Resource
                     ->searchable(),
                 TextColumn::make('email')
                     ->searchable(),
-                StatusColumn::make('status')
-
+                TextColumn::make('roles.name'),
+                StatusColumn::make(),
             ])
             ->filters([
                 //
             ])
             ->actions([
+                Impersonate::make()
+                    ->color('info')
+                    ->redirectTo('/admin'),
                 Tables\Actions\EditAction::make(),
             ])
             ->bulkActions([
