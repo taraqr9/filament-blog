@@ -62,13 +62,14 @@ class BlogResource extends Resource
             ->columns([
                 TextColumn::make('title')
                     ->searchable(),
-                BlogStatusColumn::make('status'),
+                BlogStatusColumn::make(),
             ])
             ->filters([
                 //
             ])
             ->actions([
                 Tables\Actions\EditAction::make(),
+                Tables\Actions\ViewAction::make(),
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([

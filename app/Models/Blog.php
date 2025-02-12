@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Enums\BlogStatus;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -10,7 +11,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  * @property int $user_id
  * @property string $title
  * @property string $content
- * @property string $status
+ * @property BlogStatus $status
  * @property string $slug
  */
 class Blog extends Model
@@ -18,6 +19,10 @@ class Blog extends Model
     use HasFactory;
 
     protected $guarded = [];
+
+    protected $casts = [
+        'status' => BlogStatus::class,
+    ];
 
     public function user(): BelongsTo
     {
