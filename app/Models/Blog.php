@@ -13,10 +13,10 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  * @property string $status
  * @property string $slug
  */
-
 class Blog extends Model
 {
     use HasFactory;
+
     protected $guarded = [];
 
     public function user(): BelongsTo
