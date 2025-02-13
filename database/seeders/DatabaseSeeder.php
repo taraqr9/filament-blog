@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 use App\Enums\UserStatus;
+use App\Models\Blog;
 use App\Models\User;
 use Illuminate\Database\Seeder;
 use Spatie\Permission\Models\Permission;
@@ -34,5 +35,6 @@ class DatabaseSeeder extends Seeder
         $superAdmin->assignRole('super-admin');
 
         User::factory()->count(20)->create();
+        Blog::factory()->count(120)->create();
     }
 }
