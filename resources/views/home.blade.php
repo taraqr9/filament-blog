@@ -7,7 +7,6 @@
             <p class="mt-4 text-lg">Discover the latest stories, insights, and ideas.</p>
             <a href="#latest" class="mt-6 inline-block bg-white text-blue-600 px-6 py-2 rounded-lg shadow-md hover:bg-gray-700">Explore Now</a>
         </div>
-        {{ $hello }}
     </section>
 
     <!-- Latest Blog Posts -->

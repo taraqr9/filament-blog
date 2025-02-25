@@ -15,14 +15,16 @@ return Application::configure(basePath: dirname(__DIR__))
         //
     })
     ->withExceptions(function (Exceptions $exceptions) {
-        $exceptions->respond(function (Throwable $e) {
+        $exceptions->render(function (\Throwable $e) {
             ErrorLog::create([
                 'value' => $e->getMessage(),
                 'file' => $e->getFile(),
                 'line' => $e->getLine(),
                 'created_by' => auth()->id() ?? 'guest',
             ]);
+        });
 
+        $exceptions->respond(function () {
             return response()->view('errors.500', [], 500);
         });
     })->create();
