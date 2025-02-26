@@ -15,7 +15,6 @@
             <!-- Navigation Links -->
             <div class="hidden md:flex items-center space-x-6">
                 <a href="#" class="text-gray-300 hover:text-blue-500">Home</a>
-                <a href="#" class="text-gray-300 hover:text-blue-500">About</a>
 
                 <!-- Dropdown 1 -->
                 <div class="relative group">
@@ -27,14 +26,21 @@
                     </div>
                 </div>
 
-                <!-- Dropdown 2 -->
-                <div class="relative group">
-                    <button class="text-gray-300 hover:text-blue-500 focus:outline-none">More</button>
-                    <div class="absolute left-0 hidden group-hover:flex flex-col bg-white shadow-lg rounded-md w-40">
-                        <a href="#" class="block px-4 py-2 hover:bg-gray-200 rounded-md">Contact</a>
-                        <a href="#" class="block px-4 py-2 hover:bg-gray-200 rounded-md">Privacy Policy</a>
+                <a href="#" class="text-gray-300 hover:text-blue-500">About</a>
+
+                @guest()
+                    <a href="{{ route('filament.admin.auth.login') }}" class="text-gray-300 hover:text-blue-500">Sign in</a>
+                @endguest
+
+                @auth()
+                    <div class="relative group">
+                        <button class="text-gray-300 hover:text-blue-500 focus:outline-none">{{ auth()->user()->name }}</button>
+                        <div class="absolute left-0 hidden group-hover:flex flex-col bg-white shadow-lg rounded-md w-40">
+                            <a href="#" class="block px-4 py-2 hover:bg-gray-200 rounded-md">My profile</a>
+
+                        </div>
                     </div>
-                </div>
+                @endauth
             </div>
         </div>
     </div>
