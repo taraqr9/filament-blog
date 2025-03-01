@@ -44,14 +44,14 @@ class UserResource extends Resource
                 ])->columns(2),
                 Section::make([
                     TextInput::make('password')
-                        ->required(fn(?User $record) => !$record?->exists)
-                        ->dehydrated(fn($state) => !empty($state))
+                        ->required(fn (?User $record) => ! $record?->exists)
+                        ->dehydrated(fn ($state) => ! empty($state))
                         ->password()->confirmed(),
                     TextInput::make('password_confirmation')
                         ->label('Confirm Password')
                         ->dehydrated(false)
                         ->same('password')
-                        ->required(fn(?User $record) => !$record?->exists)->password(),
+                        ->required(fn (?User $record) => ! $record?->exists)->password(),
                 ])->columns(2),
                 Radio::make('status')
                     ->options(UserStatus::class)

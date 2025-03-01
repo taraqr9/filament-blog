@@ -3,8 +3,8 @@
 namespace App\Providers;
 
 use App\Http\Responses\LoginResponse;
-use Illuminate\Support\ServiceProvider;
 use Filament\Http\Responses\Auth\Contracts\LoginResponse as LoginResponseContract;
+use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
 {
