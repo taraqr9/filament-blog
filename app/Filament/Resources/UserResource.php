@@ -13,6 +13,7 @@ use Filament\Forms\Components\TextInput;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
+use Filament\Tables\Actions\EditAction;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
 use STS\FilamentImpersonate\Tables\Actions\Impersonate;
@@ -43,14 +44,14 @@ class UserResource extends Resource
                 ])->columns(2),
                 Section::make([
                     TextInput::make('password')
-                        ->required(fn (?User $record) => ! $record?->exists)
-                        ->dehydrated(fn ($state) => ! empty($state))
+                        ->required(fn(?User $record) => !$record?->exists)
+                        ->dehydrated(fn($state) => !empty($state))
                         ->password()->confirmed(),
                     TextInput::make('password_confirmation')
                         ->label('Confirm Password')
                         ->dehydrated(false)
                         ->same('password')
-                        ->required(fn (?User $record) => ! $record?->exists)->password(),
+                        ->required(fn(?User $record) => !$record?->exists)->password(),
                 ])->columns(2),
                 Radio::make('status')
                     ->options(UserStatus::class)
@@ -66,6 +67,7 @@ class UserResource extends Resource
         return $table
             ->columns([
                 TextColumn::make('id')
+                    ->sortable()
                     ->searchable(),
                 TextColumn::make('name')
                     ->searchable(),
@@ -81,7 +83,7 @@ class UserResource extends Resource
                 Impersonate::make()
                     ->color('info')
                     ->redirectTo('/admin'),
-                Tables\Actions\EditAction::make(),
+                EditAction::make(),
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([

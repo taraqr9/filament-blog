@@ -60,6 +60,15 @@ class User extends Authenticatable implements FilamentUser
         ];
     }
 
+    protected static function booted(): void
+    {
+        static::creating(function (User $user) {
+            if ($user->getRoleNames()->isEmpty()) {
+                $user->assignRole('user');
+            }
+        });
+    }
+
     public function canAccessPanel(Panel $panel): bool
     {
         return $this->status == UserStatus::Active;
