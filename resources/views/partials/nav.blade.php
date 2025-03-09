@@ -35,10 +35,17 @@
                 @auth()
                     <div class="relative group">
                         <button class="text-gray-300 hover:text-blue-500 focus:outline-none">{{ auth()->user()->name }}</button>
-                        <div class="absolute left-0 hidden group-hover:flex flex-col bg-white shadow-lg rounded-md w-40">
-                            <a href="#" class="block px-4 py-2 hover:bg-gray-200 rounded-md">My profile</a>
+                        <div class="absolute hidden group-hover:flex flex-col bg-white shadow-lg rounded-md w-44 border border-gray-200">
+                            <a href="#" class="block px-4 py-3 text-gray-700 hover:bg-gray-200 rounded-t-md transition">My Profile</a>
 
+                            <form method="POST" action="{{ route('filament.admin.auth.logout') }}" class="w-full">
+                                @csrf
+                                <button type="submit" class="block w-full text-left px-4 py-3 text-red-600 hover:bg-gray-200 rounded-b-md transition">
+                                    Logout
+                                </button>
+                            </form>
                         </div>
+
                     </div>
                 @endauth
             </div>
