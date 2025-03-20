@@ -33,22 +33,23 @@ class ListBlogs extends ListRecords
             'all' => Tab::make()
                 ->badge(Blog::all()->count())
                 ->badgeColor('gray')
-                ->icon('heroicon-c-list-bullet'),
+                ->icon('heroicon-c-list-bullet')
+                ->modifyQueryUsing(fn (Builder $query) => $query->orderByDesc('created_at')),
             BlogStatus::Published->value => Tab::make()
                 ->badge(Blog::where('status', BlogStatus::Published)->count())
                 ->badgeColor('success')
                 ->icon('heroicon-o-check-circle')
-                ->modifyQueryUsing(fn (Builder $query) => $query->where('status', BlogStatus::Published)),
+                ->modifyQueryUsing(fn (Builder $query) => $query->where('status', BlogStatus::Published)->orderByDesc('created_at')),
             BlogStatus::Private->value => Tab::make()
                 ->badge(Blog::where('status', BlogStatus::Private)->count())
                 ->badgeColor('danger')
                 ->icon('heroicon-o-lock-closed')
-                ->modifyQueryUsing(fn (Builder $query) => $query->where('status', BlogStatus::Private)),
+                ->modifyQueryUsing(fn (Builder $query) => $query->where('status', BlogStatus::Private)->orderByDesc('created_at')),
             BlogStatus::Draft->value => Tab::make()
                 ->badge(Blog::where('status', BlogStatus::Draft)->count())
                 ->badgeColor('warning')
                 ->icon('heroicon-s-bookmark-square')
-                ->modifyQueryUsing(fn (Builder $query) => $query->where('status', BlogStatus::Draft)),
+                ->modifyQueryUsing(fn (Builder $query) => $query->where('status', BlogStatus::Draft)->orderByDesc('created_at')),
         ];
     }
 

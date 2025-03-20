@@ -42,13 +42,24 @@ class BlogResource extends Resource
                             $set('slug', Str::slug($state));
                         })
                         ->required(),
+                    Select::make('category_id')
+                        ->relationship('category', 'name')
+                        ->createOptionForm([
+                            TextInput::make('name')
+                                ->required(),
+                            RichEditor::make('description')
+                                ->nullable()
+                                ->columnSpanFull(),
+                        ])
+                        ->preload()
+                        ->searchable()
+                        ->required(),
                     Select::make('status')
                         ->options(BlogStatus::class)
                         ->default(BlogStatus::Published)
                         ->required(),
                     TextInput::make('slug')
-                        ->required()
-                        ->columnSpanFull(),
+                        ->required(),
                 ])->columns(2),
                 RichEditor::make('content')
                     ->required()
@@ -62,6 +73,7 @@ class BlogResource extends Resource
             ->columns([
                 TextColumn::make('title')
                     ->searchable(),
+                TextColumn::make('category.name'),
                 BlogStatusColumn::make(),
             ])
             ->filters([

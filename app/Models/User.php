@@ -62,7 +62,7 @@ class User extends Authenticatable implements FilamentUser
 
     protected static function booted(): void
     {
-        static::creating(function (User $user) {
+        static::created(function (User $user) {
             if ($user->getRoleNames()->isEmpty()) {
                 $user->assignRole('user');
             }

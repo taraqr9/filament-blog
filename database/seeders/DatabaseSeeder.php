@@ -14,6 +14,7 @@ class DatabaseSeeder extends Seeder
     public function run(): void
     {
         $superAdminRole = Role::create(['name' => 'super-admin']);
+        $userRole = Role::create(['name' => 'user']);
 
         $permissions = [
             'view_role', 'view_any_role', 'create_role', 'update_role', 'delete_role', 'delete_any_role',
@@ -31,8 +32,7 @@ class DatabaseSeeder extends Seeder
             'password' => bcrypt('secret'),
             'status' => UserStatus::Active,
         ]);
-
-        $superAdmin->assignRole('super-admin');
+        $superAdmin->syncRoles('super-admin');
 
         User::factory()->count(20)->create();
         Blog::factory()->count(120)->create();
