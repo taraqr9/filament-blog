@@ -16,6 +16,7 @@ use Filament\Forms\Set;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Columns\TextColumn;
+use Filament\Tables\Filters\SelectFilter;
 use Filament\Tables\Table;
 use Illuminate\Support\Str;
 
@@ -73,11 +74,15 @@ class BlogResource extends Resource
             ->columns([
                 TextColumn::make('title')
                     ->searchable(),
-                TextColumn::make('category.name'),
+                TextColumn::make('category.name')
+                    ->badge()
+                    ->color('gray')
+                    ->searchable(),
                 BlogStatusColumn::make(),
             ])
             ->filters([
-                //
+                SelectFilter::make('Category')
+                    ->relationship('category', 'name'),
             ])
             ->actions([
                 Tables\Actions\EditAction::make(),
