@@ -17,6 +17,7 @@ use Spatie\Permission\Traits\HasRoles;
  * @property string $email
  * @property string $phone
  * @property string $password
+ * @property string $avatar
  * @property UserStatus $status
  */
 class User extends Authenticatable implements FilamentUser
@@ -58,6 +59,15 @@ class User extends Authenticatable implements FilamentUser
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
         ];
+    }
+
+    protected static function booted(): void
+    {
+        static::created(function (User $user) {
+            if ($user->getRoleNames()->isEmpty()) {
+                $user->assignRole('user');
+            }
+        });
     }
 
     public function canAccessPanel(Panel $panel): bool

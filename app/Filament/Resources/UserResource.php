@@ -6,6 +6,7 @@ use App\Enums\UserStatus;
 use App\Filament\Resources\UserResource\Pages;
 use App\Filament\Table\Columns\StatusColumn;
 use App\Models\User;
+use Filament\Forms\Components\FileUpload;
 use Filament\Forms\Components\Radio;
 use Filament\Forms\Components\Section;
 use Filament\Forms\Components\Select;
@@ -13,6 +14,7 @@ use Filament\Forms\Components\TextInput;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
+use Filament\Tables\Actions\EditAction;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
 use STS\FilamentImpersonate\Tables\Actions\Impersonate;
@@ -29,17 +31,25 @@ class UserResource extends Resource
             ->schema([
                 Section::make([
                     TextInput::make('name')
+                        ->placeholder('e.g. John Doe')
                         ->required(),
                     TextInput::make('email')
-                        ->email()->unique(ignoreRecord: true)->required(),
+                        ->email()
+                        ->unique(ignoreRecord: true)
+                        ->placeholder('e.g. john.doe@example.com')
+                        ->required(),
                     TextInput::make('phone')
-                        ->tel(),
+                        ->tel()
+                        ->placeholder('e.g. 01234567890'),
                     Select::make('roles')
                         ->relationship('roles', 'name')
                         ->multiple()
                         ->preload()
                         ->searchable()
                         ->required(),
+                    TextInput::make('profession')
+                        ->placeholder('e.g. Software Engineer, Teacher, Lawyer')
+                        ->columnSpanFull(),
                 ])->columns(2),
                 Section::make([
                     TextInput::make('password')
@@ -52,6 +62,13 @@ class UserResource extends Resource
                         ->same('password')
                         ->required(fn (?User $record) => ! $record?->exists)->password(),
                 ])->columns(2),
+                Section::make([
+                    FileUpload::make('avatar')
+                        ->nullable()
+                        ->image()
+                        ->imageEditor(),
+                ]),
+
                 Radio::make('status')
                     ->options(UserStatus::class)
                     ->default(UserStatus::Active)
@@ -66,6 +83,7 @@ class UserResource extends Resource
         return $table
             ->columns([
                 TextColumn::make('id')
+                    ->sortable()
                     ->searchable(),
                 TextColumn::make('name')
                     ->searchable(),
@@ -81,7 +99,7 @@ class UserResource extends Resource
                 Impersonate::make()
                     ->color('info')
                     ->redirectTo('/admin'),
-                Tables\Actions\EditAction::make(),
+                EditAction::make(),
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
