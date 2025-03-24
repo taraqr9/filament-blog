@@ -3,7 +3,7 @@
         <div class="flex justify-between h-16 items-center">
             <!-- Logo -->
             <div class="flex items-center">
-                <a href="#" class="text-2xl font-bold text-blue-600">MyBlog</a>
+                <a href="{{ route('home') }}" class="text-2xl font-bold text-blue-600">MyBlog</a>
             </div>
 
             <!-- Search Bar -->
@@ -14,7 +14,7 @@
 
             <!-- Navigation Links -->
             <div class="hidden md:flex items-center space-x-6">
-                <a href="#" class="text-gray-300 hover:text-blue-500">Home</a>
+                <a href="{{ route('home') }}" class="text-gray-300 hover:text-blue-500">Home</a>
 
                 <!-- Dropdown 1 -->
                 <div class="relative group">

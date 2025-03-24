@@ -4,7 +4,6 @@ namespace App\Filament\Resources;
 
 use App\Enums\Status;
 use App\Filament\Resources\CategoryResource\Pages;
-use App\Filament\Resources\CategoryResource\RelationManagers;
 use App\Filament\Table\Columns\StatusColumn;
 use App\Models\Category;
 use Filament\Forms\Components\RichEditor;
@@ -38,8 +37,8 @@ class CategoryResource extends Resource
 
                         $set('slug', Str::slug($state));
                     })
-                ->required()
-                ->columnSpanFull(),
+                    ->required()
+                    ->columnSpanFull(),
                 TextInput::make('slug')
                     ->required(),
                 Select::make('status')

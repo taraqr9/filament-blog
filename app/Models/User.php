@@ -17,6 +17,7 @@ use Spatie\Permission\Traits\HasRoles;
  * @property string $email
  * @property string $phone
  * @property string $password
+ * @property string $avatar
  * @property UserStatus $status
  */
 class User extends Authenticatable implements FilamentUser

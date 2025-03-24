@@ -19,11 +19,16 @@
 
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
                 @foreach($blogs as $blog)
-                    <div class="bg-white p-6 rounded-lg hover:shadow-slate-400 hover:shadow-lg transition">
-                        <img src="{{ asset('images/thumbnail.jpg') }}" alt="Thumbnail" class="rounded-md mb-4">
+                    <div class="bg-white p-6 rounded-lg hover:shadow-gray-400 hover:shadow-lg transition">
+                        <a href="{{ route('blog.show', $blog->slug) }}">
+                            <img
+                                src="{{ $blog->thumbnail ? url('storage/'.$blog->thumbnail) : asset('images/thumbnail.jpg') }}"
+                                alt="Thumbnail" class="rounded-md mb-4 shadow-gray-600 shadow-lg hover:shadow-gray-500">
+                        </a>
                         <h3 class="text-lg font-semibold">{{ Str::limit($blog->title, 25) }}</h3>
                         <p class="text-gray-600">{{ Str::limit($blog->content, 50) }}</p>
-                        <a href="{{ route('blog.show', $blog->slug) }}" class="text-blue-600 hover:underline mt-2 block">Read more</a>
+                        <a href="{{ route('blog.show', $blog->slug) }}"
+                           class="text-blue-600 hover:underline mt-2 block">Read more</a>
                     </div>
                 @endforeach
             </div>

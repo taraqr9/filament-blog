@@ -25,7 +25,7 @@ class DatabaseSeeder extends Seeder
             'Entertainment & Media',
             'Sports & Fitness',
             'Science & Nature',
-            'Personal Development'
+            'Personal Development',
         ];
 
         $superAdminRole = Role::create(['name' => 'super-admin']);
