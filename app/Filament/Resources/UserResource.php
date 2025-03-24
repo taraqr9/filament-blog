@@ -7,7 +7,6 @@ use App\Filament\Resources\UserResource\Pages;
 use App\Filament\Table\Columns\StatusColumn;
 use App\Models\User;
 use Filament\Forms\Components\FileUpload;
-use Filament\Forms\Components\Grid;
 use Filament\Forms\Components\Radio;
 use Filament\Forms\Components\Section;
 use Filament\Forms\Components\Select;
@@ -50,18 +49,18 @@ class UserResource extends Resource
                         ->required(),
                     TextInput::make('profession')
                         ->placeholder('e.g. Software Engineer, Teacher, Lawyer')
-                        ->columnSpanFull()
+                        ->columnSpanFull(),
                 ])->columns(2),
                 Section::make([
                     TextInput::make('password')
-                        ->required(fn(?User $record) => !$record?->exists)
-                        ->dehydrated(fn($state) => !empty($state))
+                        ->required(fn (?User $record) => ! $record?->exists)
+                        ->dehydrated(fn ($state) => ! empty($state))
                         ->password()->confirmed(),
                     TextInput::make('password_confirmation')
                         ->label('Confirm Password')
                         ->dehydrated(false)
                         ->same('password')
-                        ->required(fn(?User $record) => !$record?->exists)->password(),
+                        ->required(fn (?User $record) => ! $record?->exists)->password(),
                 ])->columns(2),
                 Section::make([
                     FileUpload::make('avatar')
