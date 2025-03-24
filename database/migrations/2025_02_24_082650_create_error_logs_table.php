@@ -13,6 +13,7 @@ return new class extends Migration
     {
         Schema::create('error_logs', function (Blueprint $table) {
             $table->id();
+            $table->string('message');
             $table->string('value');
             $table->string('file');
             $table->string('line');

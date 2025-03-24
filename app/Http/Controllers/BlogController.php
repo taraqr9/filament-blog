@@ -26,18 +26,30 @@ class BlogController extends Controller
             }
         }
 
-        $blogs = $blogs->where('status', BlogStatus::Published)->orderByDesc('created_at')->paginate(20)->appends($request->query());
+        $blogs = $blogs->where('status',
+            BlogStatus::Published)->orderByDesc('created_at')->paginate(20)->appends($request->query());
 
         return view('blog.list', compact('blogs', 'category'));
     }
 
-    public function show($slug): View
+    public function show($slug)
     {
-        $blog = Blog::where('slug', $slug)
-            ->where('status', BlogStatus::Published)
-            ->first();
+        try {
+            $blog = Blog::where('slug', $slug)
+                ->where('status', BlogStatus::Published)
+                ->first();
 
-        return view('blog.show', compact('blog'));
+            return view('blog.show', compact('blog'));
+        } catch (Exception $error) {
+            //            $message = 'Message : '.$e->getMessage().', File : '.$e->getFile().', Line : '.$e->getLine();
+
+            //            https://www.youtube.com/watch?v=eTOScyTCkiY&ab_channel=LaravelDaily // watch later
+
+            dd($error);
+
+            return redirect()->back()->with('toast', config('message.error'));
+        }
+
     }
 
     public function subscribe(Request $request)
