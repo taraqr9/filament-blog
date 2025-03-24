@@ -11,10 +11,13 @@ use Filament\Forms\Components\RichEditor;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Form;
+use Filament\Forms\Get;
+use Filament\Forms\Set;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
+use Illuminate\Support\Str;
 
 class CategoryResource extends Resource
 {
@@ -27,7 +30,18 @@ class CategoryResource extends Resource
         return $form
             ->schema(components: [
                 TextInput::make('name')
-                ->required(),
+                    ->live(onBlur: true)
+                    ->afterStateUpdated(function (Get $get, Set $set, ?string $old, ?string $state) {
+                        if (($get('slug') ?? '') !== Str::slug($old)) {
+                            return;
+                        }
+
+                        $set('slug', Str::slug($state));
+                    })
+                ->required()
+                ->columnSpanFull(),
+                TextInput::make('slug')
+                    ->required(),
                 Select::make('status')
                     ->options(Status::class)
                     ->default(Status::Active)
@@ -43,6 +57,7 @@ class CategoryResource extends Resource
         return $table
             ->columns([
                 TextColumn::make('name'),
+                TextColumn::make('slug'),
                 StatusColumn::make(),
             ])
             ->filters([
