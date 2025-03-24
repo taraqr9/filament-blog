@@ -9,4 +9,6 @@ Route::get('/', [HomeController::class, 'index'])->name('home');
 Route::prefix('blogs')->group(function () {
     Route::get('/', [BlogController::class, 'index'])->name('blog.index');
     Route::get('/{slug}', [BlogController::class, 'show'])->name('blog.show');
+
+    Route::post('/subscribe', [BlogController::class, 'subscribe'])->name('blog.subscribe');
 });

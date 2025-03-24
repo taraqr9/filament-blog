@@ -6,6 +6,8 @@ use App\Enums\BlogStatus;
 use App\Enums\Status;
 use App\Models\Blog;
 use App\Models\Category;
+use App\Models\Subscriber;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
 
@@ -36,5 +38,20 @@ class BlogController extends Controller
             ->first();
 
         return view('blog.show', compact('blog'));
+    }
+
+    public function subscribe(Request $request): RedirectResponse
+    {
+        $data = $request->validate([
+            'email' => 'required|email|unique:subscribers,email',
+        ]);
+
+        Subscriber::create($data);
+
+        return redirect()->back()->with('toast', [
+            'type' => 'success',
+            'title' => 'Successfully Subscribed!',
+            'message' => 'You have been added to our newsletter.',
+        ]);
     }
 }

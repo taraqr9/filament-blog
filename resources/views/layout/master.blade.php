@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="icon" type="image/png" href="{{ asset('images/home.jpg') }}">
-    <title> {{isset($page_title)? $page_title : 'Blog'}} </title>
+    <title> {{ isset($page_title)? $page_title : 'Blog' }} </title>
     <link rel="icon" type="image/png" href="{{ asset('images/ico.ico') }}"/>
 
     @include('partials.styles')
@@ -24,6 +24,8 @@
     </main>
 
     @include('partials.footer')
+
+    @include('partials.toast')
 </div>
 @include('partials.scripts')
 
