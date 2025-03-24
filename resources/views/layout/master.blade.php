@@ -10,6 +10,10 @@
     @include('partials.styles')
 
     <style>
+        #toast-message {
+            transition: opacity 0.5s ease-in-out;
+        }
+
         @yield('CSSheet')
     </style>
 
