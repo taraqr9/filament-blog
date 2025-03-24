@@ -18,10 +18,10 @@
 
                 <!-- Dropdown 1 -->
                 <div class="relative group">
-                    <button class="text-gray-300 hover:text-blue-500 focus:outline-none">Categories</button>
+                    <a href="{{ route('blog.index') }}" class="text-gray-300 hover:text-blue-500 focus:outline-none">Blogs</a>
                     <div class="absolute left-0 hidden group-hover:flex flex-col bg-white shadow-lg rounded-md w-40">
                         @foreach(\App\Models\Category::where('status', \App\Enums\Status::Active)->get() as $category)
-                            <a href="#" class="block px-4 py-2 hover:bg-gray-200 rounded-md">{{ $category->name }}</a>
+                            <a href="{{ route('blog.index', ['slug' => $category->slug]) }}" class="block px-4 py-2 hover:bg-gray-200 rounded-md">{{ $category->name }}</a>
                         @endforeach
                     </div>
                 </div>
