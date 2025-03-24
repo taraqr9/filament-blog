@@ -53,6 +53,7 @@ class DatabaseSeeder extends Seeder
         foreach ($categories as $category) {
             Category::create([
                 'name' => $category,
+                'slug' => fake()->slug(),
                 'description' => fake()->text(),
                 'status' => Status::Active,
             ]);
