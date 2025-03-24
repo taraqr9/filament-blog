@@ -2,7 +2,8 @@
 <script>
     document.addEventListener("DOMContentLoaded", function () {
         @if(session('toast'))
-        showToast("{{ session('toast.type') }}", "{{ session('toast.title') }}", "{{ session('toast.message') }}");
+        let toastData = @json(session('toast'));
+        showToast(toastData.type, toastData.title, toastData.message);
         @endif
 
         @if ($errors->any())
