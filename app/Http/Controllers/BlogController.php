@@ -34,21 +34,21 @@ class BlogController extends Controller
 
     public function show($slug)
     {
-        try {
-            $blog = Blog::where('slug', $slug)
-                ->where('status', BlogStatus::Published)
-                ->first();
+        //        try {
+        $blog = Blog::where('slug', $slug)
+            ->where('status', BlogStatus::Published)
+            ->first();
 
-            return view('blog.show', compact('blog'));
-        } catch (Exception $error) {
-            //            $message = 'Message : '.$e->getMessage().', File : '.$e->getFile().', Line : '.$e->getLine();
-
-            //            https://www.youtube.com/watch?v=eTOScyTCkiY&ab_channel=LaravelDaily // watch later
-
-            dd($error);
-
-            return redirect()->back()->with('toast', config('message.error'));
-        }
+        return view('blog.show', compact('blog'));
+        //        } catch (Exception $error) {
+        //            //            $message = 'Message : '.$e->getMessage().', File : '.$e->getFile().', Line : '.$e->getLine();
+        //
+        //            //            https://www.youtube.com/watch?v=eTOScyTCkiY&ab_channel=LaravelDaily // watch later
+        //
+        //            dd($error);
+        //
+        //            return redirect()->back()->with('toast', config('message.error'));
+        //        }
 
     }
 
