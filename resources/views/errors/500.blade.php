@@ -13,7 +13,8 @@
     <h2 class="text-3xl font-bold text-gray-800 mt-4">Internal Server Error</h2>
     <p class="text-gray-600 mt-2">Something went wrong on our end. Please try again later.</p>
 
-    <a href="{{ url('/') }}" class="mt-6 inline-block bg-blue-600 text-white px-6 py-3 rounded-lg shadow-md hover:bg-blue-700 transition">
+    <a href="{{ route('home') }}"
+       class="mt-6 inline-block bg-blue-600 text-white px-6 py-3 rounded-lg shadow-md hover:bg-blue-700 transition">
         Go Back Home
     </a>
 </div>
