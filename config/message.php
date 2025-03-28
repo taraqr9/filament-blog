@@ -14,4 +14,12 @@ return [
         'title' => 'Something Went Wrong!',
         'message' => 'An unexpected error occurred. Please try again later.',
     ],
+
+    'content' => [
+        'updated' => [
+            'type' => 'success',
+            'title' => 'Successfully Updated!',
+            'message' => 'You have been updated to our newsletter.',
+        ],
+    ],
 ];
