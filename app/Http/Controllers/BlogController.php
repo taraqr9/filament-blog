@@ -7,7 +7,7 @@ use App\Enums\Status;
 use App\Models\Blog;
 use App\Models\Category;
 use App\Models\Subscriber;
-use Exception;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
 
@@ -32,39 +32,40 @@ class BlogController extends Controller
         return view('blog.list', compact('blogs', 'category'));
     }
 
-    public function show($slug)
+    public function show($slug): View
     {
-        //        try {
         $blog = Blog::where('slug', $slug)
             ->where('status', BlogStatus::Published)
             ->first();
 
-        return view('blog.show', compact('blog'));
-        //        } catch (Exception $error) {
-        //            //            $message = 'Message : '.$e->getMessage().', File : '.$e->getFile().', Line : '.$e->getLine();
-        //
-        //            //            https://www.youtube.com/watch?v=eTOScyTCkiY&ab_channel=LaravelDaily // watch later
-        //
-        //            dd($error);
-        //
-        //            return redirect()->back()->with('toast', config('message.error'));
-        //        }
+        $blogs = $blog->category->blogs()
+            ->where('status', BlogStatus::Published)
+            ->inRandomOrder()
+            ->take(3)
+            ->get();
 
+        if ($blogs->count() < 3) {
+            $remainingBlogsCount = 3 - $blogs->count();
+
+            $randomBlogs = Blog::where('status', BlogStatus::Published)
+                ->inRandomOrder()
+                ->take($remainingBlogsCount)
+                ->get();
+
+            $blogs = $blogs->merge($randomBlogs);
+        }
+
+        return view('blog.show', compact('blog', 'blogs'));
     }
 
-    public function subscribe(Request $request)
+    public function subscribe(Request $request): RedirectResponse
     {
         $data = $request->validate([
             'email' => 'required|email|unique:subscribers,email',
         ]);
 
-        try {
-            Subscriber::create($data);
+        Subscriber::create($data);
 
-            return redirect()->back()->with('toast', config('message.subscriber.success'));
-        } catch (Exception $e) {
-            return redirect()->back()->with('toast', config('message.error'));
-        }
-
+        return redirect()->back()->with('toast', config('message.subscriber.success'));
     }
 }
