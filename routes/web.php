@@ -18,3 +18,5 @@ Route::prefix('blogs')->group(function () {
 
     Route::post('/subscribe', [BlogController::class, 'subscribe'])->name('blog.subscribe');
 });
+
+Route::get('/about', [HomeController::class, 'about'])->name('about');

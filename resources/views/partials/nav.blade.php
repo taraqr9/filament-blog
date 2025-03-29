@@ -30,7 +30,7 @@
                     </div>
                 </div>
 
-                <a href="#" class="text-gray-300 hover:text-blue-500">About</a>
+                <a href="{{ route('about') }}" class="text-gray-300 hover:text-blue-500">About</a>
 
                 @guest()
                     <a href="{{ route('filament.admin.auth.login') }}"
