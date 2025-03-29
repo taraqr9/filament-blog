@@ -1,3 +1,5 @@
+@php use App\Models\Category; @endphp
+@php use App\Enums\Status; @endphp
 <nav class="bg-gray-50 dark:bg-gray-800 fixed top-0 left-0 w-full z-50 shadow-md">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="flex justify-between h-16 items-center">
@@ -18,15 +20,17 @@
 
                 <!-- Dropdown 1 -->
                 <div class="relative group">
-                    <a href="{{ route('blog.index') }}" class="text-gray-300 hover:text-blue-500 focus:outline-none">Blogs</a>
+                    <a href="{{ route('blog.index') }}"
+                       class="text-gray-300 hover:text-blue-500 focus:outline-none">Blogs</a>
                     <div class="absolute left-0 hidden group-hover:flex flex-col bg-white shadow-lg rounded-md w-40">
-                        @foreach(\App\Models\Category::where('status', \App\Enums\Status::Active)->get() as $category)
-                            <a href="{{ route('blog.index', ['slug' => $category->slug]) }}" class="block px-4 py-2 hover:bg-gray-200 rounded-md">{{ $category->name }}</a>
+                        @foreach(Category::where('status', Status::Active)->get() as $category)
+                            <a href="{{ route('blog.index', ['slug' => $category->slug]) }}"
+                               class="block px-4 py-2 hover:bg-gray-200 rounded-md">{{ $category->name }}</a>
                         @endforeach
                     </div>
                 </div>
 
-                <a href="#" class="text-gray-300 hover:text-blue-500">About</a>
+                <a href="{{ route('about') }}" class="text-gray-300 hover:text-blue-500">About</a>
 
                 @guest()
                     <a href="{{ route('filament.admin.auth.login') }}"
@@ -39,7 +43,7 @@
                             class="text-gray-300 hover:text-blue-500 focus:outline-none">{{ auth()->user()->name }}</button>
                         <div
                             class="absolute hidden group-hover:flex flex-col bg-white shadow-lg rounded-md w-44 border border-gray-200">
-                            <a href="#"
+                            <a href="{{ route('profile') }}"
                                class="block px-4 py-3 text-gray-700 hover:bg-gray-200 rounded-t-md transition">My Profile</a>
 
                             <form method="POST" action="{{ route('filament.admin.auth.logout') }}" class="w-full">
