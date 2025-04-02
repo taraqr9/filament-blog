@@ -20,3 +20,7 @@ Route::prefix('blogs')->group(function () {
 });
 
 Route::get('/about', [HomeController::class, 'about'])->name('about');
+
+Route::get('/view', function () {
+    return view('mail.blog.subscriber');
+});

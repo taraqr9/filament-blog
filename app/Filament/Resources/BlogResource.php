@@ -6,6 +6,7 @@ use App\Enums\BlogStatus;
 use App\Filament\Resources\BlogResource\Pages;
 use App\Filament\Table\Columns\BlogStatusColumn;
 use App\Models\Blog;
+use Filament\Forms\Components\Checkbox;
 use Filament\Forms\Components\FileUpload;
 use Filament\Forms\Components\Grid;
 use Filament\Forms\Components\RichEditor;
@@ -94,6 +95,8 @@ class BlogResource extends Resource
                 RichEditor::make('content')
                     ->required()
                     ->columnSpanFull(),
+                Checkbox::make('send_mail')
+                    ->label('Send mail to all subscribers'),
             ]);
     }
 

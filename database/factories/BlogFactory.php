@@ -24,6 +24,7 @@ class BlogFactory extends Factory
             'title' => fake()->sentence(10),
             'slug' => fake()->slug(),
             'content' => fake()->text(),
+            'send_mail' => false,
             'status' => $this->faker->randomElement(BlogStatus::cases()),
         ];
     }
