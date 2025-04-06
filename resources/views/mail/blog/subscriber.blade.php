@@ -15,7 +15,9 @@
                 <tr>
                     <td align="center">
                         <a href="#">
-                            <img src="https://via.placeholder.com/150x50" alt="Blog Logo" style="width: 150px;">
+                            <img src="{{ $message->embed(public_path('images/mail_head.png')) }}"
+                                 alt="mail head"
+                                 style="max-width: 200px; height: auto; display: block;"/>
                         </a>
                     </td>
                 </tr>

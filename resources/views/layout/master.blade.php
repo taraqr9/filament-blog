@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="icon" type="image/png" href="{{ asset('images/home.jpg') }}">
     <title> {{ isset($page_title)? $page_title : 'Blog' }} </title>
-    <link rel="icon" type="image/png" href="{{ asset('images/ico.ico') }}"/>
+    <link rel="icon" type="image/png" href="{{ asset('images/favicon.png') }}"/>
 
     @include('partials.styles')
 

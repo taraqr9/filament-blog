@@ -24,6 +24,7 @@ use Filament\Tables\Actions\ViewAction;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Filters\SelectFilter;
 use Filament\Tables\Table;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Str;
 
 class BlogResource extends Resource
@@ -96,7 +97,8 @@ class BlogResource extends Resource
                     ->required()
                     ->columnSpanFull(),
                 Checkbox::make('send_mail')
-                    ->label('Send mail to all subscribers'),
+                    ->label('Send mail to all subscribers')
+                    ->hidden(fn (?Model $record) => filled($record?->published_at)),
             ]);
     }
 
@@ -112,6 +114,7 @@ class BlogResource extends Resource
                     ->searchable(),
                 BlogStatusColumn::make(),
             ])
+            ->defaultSort('created_at', 'desc')
             ->filters([
                 SelectFilter::make('Category')
                     ->relationship('category', 'name'),

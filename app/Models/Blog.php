@@ -42,15 +42,24 @@ class Blog extends Model
         static::created(function (Blog $blog) {
             if ($blog->status === BlogStatus::Published && $blog->send_mail === true) {
                 $emails = Subscriber::where('status', Status::Active)->pluck('email')->toArray();
-                $emails[] = auth()->user()->email;
 
-                SubscriberNotificationJob::dispatch($blog, $emails);
+                if (!empty($emails)) {
+                    $emails[] = auth()->user()->email;
+                    SubscriberNotificationJob::dispatch($blog, $emails);
+                }
             }
         });
 
         static::updating(function (Blog $blog) {
-            if ($blog->status === BlogStatus::Published && $blog->send_mail === true && $blog->published_at !== null) {
-                // send mail
+            if ($blog->status === BlogStatus::Published && $blog->send_mail === true && $blog->getOriginal('published_at') === null) {
+                $emails = Subscriber::where('status', Status::Active)->pluck('email')->toArray();
+
+                if (!empty($emails)) {
+                    $emails[] = auth()->user()->email;
+                    SubscriberNotificationJob::dispatch($blog, $emails);
+                }
+
+                $blog->published_at = Carbon::now();
             }
         });
     }

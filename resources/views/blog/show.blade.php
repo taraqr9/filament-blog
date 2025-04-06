@@ -26,7 +26,6 @@
                                     <time pubdate datetime="2022-02-08"
                                           title="February 8th, 2022">{{ Common::dateTimeFormat($blog->created_at) }}</time>
                                 </p>
-                                {{ $blog->category->name }} // Remove this
                             </div>
                         </div>
                     </address>
