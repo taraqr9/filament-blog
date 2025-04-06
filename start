@@ -1,0 +1,79 @@
+#!/bin/bash
+
+function print_color(){
+  NC='\033[0m' # No Color
+
+  case $1 in
+    "green") COLOR='\033[0;32m' ;;
+    "red") COLOR='\033[0;31m' ;;
+    "*") COLOR='\033[0m' ;;
+  esac
+
+  echo -e "${COLOR}$2${NC}"
+}
+
+# Check Docker
+if ! command -v docker &> /dev/null; then
+  print_color "red" "Error: Docker is not installed."
+  exit 1
+fi
+
+# Check Docker Compose (new integrated version)
+if ! docker compose version &> /dev/null; then
+  print_color "red" "Error: Docker Compose is not available or not installed correctly."
+  exit 1
+fi
+
+# No command provided
+if [ $# -eq 0 ]; then
+  print_color "red" "No command provided. Usage: ./script.sh ready"
+  exit 1
+fi
+
+# Handle "ready" command
+if [ "$1" == "ready" ]; then
+  print_color "green" "Checking for .env file in the project root..."
+
+  if [ -e .env ]; then
+    print_color "green" ".env file already exists in the project root."
+  else
+    print_color "green" "Creating .env file from .env.example..."
+    cp .env.example .env
+    print_color "green" ".env file has been created successfully."
+  fi
+
+  print_color "green" "Checking for docker-compose.yml file..."
+
+  if [ -e docker-compose.yml ]; then
+    print_color "green" "docker-compose.yml file already exists."
+  else
+    print_color "green" "Creating docker-compose.yml file from docker-compose.yml.example..."
+    cp docker-compose.yml.example docker-compose.yml
+    print_color "green" "docker-compose.yml file has been created successfully."
+  fi
+
+  print_color "green" "Setting execute permission for the Docker init script..."
+  chmod +x .docker/app/init.sh
+
+  print_color "green" "Building and starting Docker containers..."
+  docker compose up -d --build
+
+  print_color "green" "Installing Composer dependencies..."
+  docker compose exec app composer install
+
+  print_color "green" "Installing npm dependencies..."
+  docker compose exec app npm install
+
+  print_color "green" "Building npm..."
+  docker compose exec app npm run build
+
+  print_color "green" "Running database migrations and seeders..."
+  docker compose exec app php artisan migrate:fresh --seed
+
+  print_color "green" "✅ The Blog API project is now ready for use."
+  print_color "green" "✅ Setup completed successfully."
+fi
+
+# Footer
+print_color "green" "Script executed by: Md. Taraq Rahman"
+print_color "green" "Email: taraqr9@gmail.com"
