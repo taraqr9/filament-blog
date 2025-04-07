@@ -29,8 +29,7 @@ RUN apk update && apk add --no-cache \
     g++ \
     make \
     nodejs \
-    npm \
-    supervisor
+    npm
 
 RUN docker-php-ext-configure gd --with-freetype --with-jpeg --with-webp && \
     docker-php-ext-configure imap && \
