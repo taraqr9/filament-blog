@@ -1,3 +1,5 @@
+version: '3.8'
+
 networks:
   laravel:
 
@@ -56,16 +58,16 @@ services:
     networks:
       - laravel
 
-   queue:
-      build:
-        context: .
-        dockerfile: .docker/app/Dockerfile
-      container_name: queue-worker
-      command: php artisan queue:work --tries=3
-      restart: always
-      depends_on:
-        - mysql
-      volumes:
-        - ./:/var/www
-      networks:
-        - laravel
+  queue:
+    build:
+      context: .
+      dockerfile: .docker/app/Dockerfile
+    container_name: queue-worker
+    command: php artisan queue:work --tries=3
+    restart: always
+    depends_on:
+      - mysql
+    volumes:
+      - ./:/var/www
+    networks:
+      - laravel
