@@ -30,9 +30,17 @@
                         </div>
                     </address>
 
-                    <hr class="border-gray-200 sm:mx-auto dark:border-gray-700">
+                    <hr class="border-gray-200 sm:mx-auto dark:border-gray-700 mb-4">
 
-                    <h1 class="mt-4 mb-4 text-3xl font-extrabold leading-tight text-gray-900 lg:mb-6 lg:text-4xl dark:text-white">{{ $blog->title }}</h1>
+                    <div class="mx-auto">
+                        @if($blog->thumbnail)
+                            <img src="{{ url('storage/'.$blog->thumbnail) }}" alt="Thumbnail" class="rounded-xl mb-4 w-full" />
+                        @endif
+
+                        <h1 class="mb-4 text-3xl font-extrabold leading-tight text-gray-900 lg:mb-6 lg:text-4xl dark:text-white w-full">
+                            {{ $blog->title }}
+                        </h1>
+                    </div>
                 </header>
 
                 <div class="text-gray-900 dark:text-white">
@@ -58,7 +66,7 @@
                                 alt="Thumbnail" class="rounded-md mb-4 shadow-gray-600 shadow-lg hover:shadow-gray-500">
                         </a>
                         <h3 class="text-lg font-semibold">{{ Str::limit($blog->title, 25) }}</h3>
-                        <p class="text-gray-600">{{ Str::limit($blog->content, 50) }}</p>
+                        <p class="text-gray-600">{!! Str::limit($blog->content, 50) !!}</p>
                         <a href="{{ route('blog.show', $blog->slug) }}"
                            class="text-blue-600 hover:underline mt-2 block">Read more</a>
                     </div>
