@@ -43,7 +43,7 @@ class Blog extends Model
             if ($blog->status === BlogStatus::Published && $blog->send_mail === true) {
                 $emails = Subscriber::where('status', Status::Active)->pluck('email')->toArray();
 
-                if (!empty($emails)) {
+                if (! empty($emails)) {
                     $emails[] = auth()->user()->email;
                     SubscriberNotificationJob::dispatch($blog, $emails);
                 }
@@ -54,7 +54,7 @@ class Blog extends Model
             if ($blog->status === BlogStatus::Published && $blog->send_mail === true && $blog->getOriginal('published_at') === null) {
                 $emails = Subscriber::where('status', Status::Active)->pluck('email')->toArray();
 
-                if (!empty($emails)) {
+                if (! empty($emails)) {
                     $emails[] = auth()->user()->email;
                     SubscriberNotificationJob::dispatch($blog, $emails);
                 }

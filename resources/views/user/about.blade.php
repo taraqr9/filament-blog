@@ -1,3 +1,4 @@
+@php($hideSubscription = true)
 @extends('layout.master')
 
 @section('content')
@@ -5,7 +6,7 @@
         <div class="flex justify-center px-4 mx-auto max-w-screen-xl">
             <article class="mx-auto w-full max-w-2xl">
                 <div>
-                    <div class="mr-10">
+                    <div class="mr-10 mt-10">
                         <img class="rounded-lg w-full md:w-auto h-auto"
                              src="{{ asset('images/about.jpg') }}"
                              alt="Profile Image">
