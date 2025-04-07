@@ -1,3 +1,4 @@
+@php($hideSubscription = true)
 @extends('layout.master')
 
 @section('content')

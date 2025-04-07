@@ -67,6 +67,9 @@ if [ "$1" == "ready" ]; then
   print_color "green" "Building npm..."
   docker compose exec app npm run build
 
+  print_color "green" "Key generating..."
+  docker compose exec app php artisan key:generate
+
   print_color "green" "Running database migrations and seeders..."
   docker compose exec app php artisan migrate:fresh --seed
 

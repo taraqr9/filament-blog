@@ -4,6 +4,7 @@ ARG SERVER_ENVIRONMENT
 ENV APP_ENV=${SERVER_ENVIRONMENT}
 
 RUN apk update && apk add --no-cache \
+    nano \
     linux-headers \
     libzip-dev \
     libjpeg-turbo-dev \
