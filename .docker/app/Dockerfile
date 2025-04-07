@@ -3,7 +3,8 @@ FROM php:8.3-fpm-alpine
 ARG SERVER_ENVIRONMENT
 ENV APP_ENV=${SERVER_ENVIRONMENT}
 
-RUN apk update && apk add --no-cache \
+RUN sed -i 's|dl-cdn.alpinelinux.org|mirrors.aliyun.com|g' /etc/apk/repositories && \
+    apk update && apk add --no-cache \
     nano \
     linux-headers \
     libzip-dev \
