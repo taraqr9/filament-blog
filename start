@@ -80,6 +80,11 @@ if [ "$1" == "ready" ]; then
   print_color "green" "Building npm..."
   docker compose exec app npm run build
 
+  print_color "green" "Giving permission for Storage and Bootstarp/Cache folder..."
+  docker compose exec app chown -R www-data:www-data /var/www/storage
+  docker compose exec app chown -R www-data:www-data /var/www/bootstrap/cache
+
+
   print_color "green" "Key generating..."
   docker compose exec app php artisan key:generate
 
