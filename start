@@ -55,6 +55,19 @@ if [ "$1" == "ready" ]; then
   print_color "green" "Setting execute permission for the Docker init script..."
   chmod +x .docker/app/init.sh
 
+  print_color "green" "Fixing local host permissions to avoid volume issues..."
+
+  export UID=$(id -u)
+  export GID=$(id -g)
+
+  if command -v sudo &> /dev/null; then
+    sudo chown -R $USER:$USER .
+    sudo chmod -R ug+rw .
+  else
+    chown -R $USER:$USER .
+    chmod -R ug+rw .
+  fi
+
   print_color "green" "Building and starting Docker containers..."
   docker compose up -d --build
 

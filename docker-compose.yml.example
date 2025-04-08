@@ -50,6 +50,7 @@ services:
     build:
       context: .
       dockerfile: .docker/app/Dockerfile
+    user: "${UID}:${GID}"
     container_name: php
     volumes:
       - ./:/var/www

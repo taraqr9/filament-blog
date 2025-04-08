@@ -48,6 +48,8 @@ RUN docker-php-ext-configure gd --with-freetype --with-jpeg --with-webp && \
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/bin --filename=composer
 
 # Optional: Add non-root user for Laravel
+ARG uid=1000
+ARG gid=1000
 RUN addgroup -g 1000 www && adduser -u 1000 -G www -s /bin/sh -D www
 USER www
 
