@@ -9,6 +9,19 @@ return [
         ],
     ],
 
+    'unsubscribe' => [
+        'success' => [
+            'type' => 'success',
+            'title' => 'You have been successfully unsubscribed.',
+            'message' => 'Removed from our newsletter.',
+        ],
+        'not-found' => [
+            'type' => 'error',
+            'title' => 'User not subscribed.',
+            'message' => 'No subscription found with that email address.',
+        ],
+    ],
+
     'error' => [
         'type' => 'error',
         'title' => 'Something Went Wrong!',

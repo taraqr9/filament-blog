@@ -46,14 +46,17 @@
                 <tr>
                     <td align="center" style="border-top: 1px solid #ddd; padding-top: 20px;">
                         <p style="color: #999; font-size: 12px;">
-                            You received this email because you subscribed to our newsletter.
-                            <a href="#" style="color: #007bff; text-decoration: none;">Unsubscribe</a> anytime.
+                            You received this email because you subscribed to our newsletter. | <a href="{{ route('unsubscribe', ['email' => $email]) }}" style="text-decoration: none; color: #999;" target="_blank">
+                                <u><b>Unsubscribe</b></u>
+                            </a>
                         </p>
+
                         <p style="color: #999; font-size: 12px;">
                             © @php echo date('Y'); @endphp Blog Website. All Rights Reserved.
                         </p>
                     </td>
                 </tr>
+
             </table>
         </td>
     </tr>
