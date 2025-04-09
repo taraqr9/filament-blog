@@ -34,7 +34,7 @@
 
                     <div class="mx-auto">
                         @if($blog->thumbnail)
-                            <img src="{{ url('storage/'.$blog->thumbnail) }}" alt="Thumbnail" class="rounded-xl mb-4 w-full" />
+                            <img src="{{ url('storage/'.$blog->thumbnail) }}" alt="Thumbnail" class="h-80 w-full object-contain rounded-xl mb-4 mx-auto" />
                         @endif
 
                         <h1 class="mb-4 text-3xl font-extrabold leading-tight text-gray-900 lg:mb-6 lg:text-4xl dark:text-white w-full">
@@ -59,17 +59,7 @@
             <h2 class="text-2xl font-bold mb-6 text-center text-white">Read More</h2>
             <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 justify-items-center">
                 @foreach($blogs as $blog)
-                    <div class="bg-white p-6 rounded-lg hover:shadow-gray-400 hover:shadow-lg transition">
-                        <a href="{{ route('blog.show', $blog->slug) }}">
-                            <img
-                                src="{{ $blog->thumbnail ? url('storage/'.$blog->thumbnail) : asset('images/thumbnail.jpg') }}"
-                                alt="Thumbnail" class="rounded-md mb-4 shadow-gray-600 shadow-lg hover:shadow-gray-500">
-                        </a>
-                        <h3 class="text-lg font-semibold">{{ Str::limit($blog->title, 25) }}</h3>
-                        <p class="text-gray-600">{!! Str::limit($blog->content, 50) !!}</p>
-                        <a href="{{ route('blog.show', $blog->slug) }}"
-                           class="text-blue-600 hover:underline mt-2 block">Read more</a>
-                    </div>
+                    <x-blog-card :blog="$blog" />
                 @endforeach
             </div>
         </div>
