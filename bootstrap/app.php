@@ -15,23 +15,23 @@ return Application::configure(basePath: dirname(__DIR__))
         //
     })
     ->withExceptions(function (Exceptions $exceptions) {
-        $exceptions->render(function (Throwable $e) {
-            if ($e->getMessage() == 'Unauthenticated.') {
-                return redirect()->route('filament.admin.auth.login');
-            }
-
-            if (config('app.env') === 'production') {
-                ErrorLog::create([
-                    'value' => $e->getMessage(),
-                    'file' => $e->getFile(),
-                    'line' => $e->getLine(),
-                    'created_by' => auth()->id() ?? null,
-                ]);
-
-                return redirect()->back()->with('toast', config('message.error'));
-            }
-
-            // return response()->view('errors.500', [], 500);  // show 500 blade
-        });
+//        $exceptions->render(function (Throwable $e) {
+//            if ($e->getMessage() == 'Unauthenticated.') {
+//                return redirect()->route('filament.admin.auth.login');
+//            }
+//
+//            if (config('app.env') === 'production') {
+//                ErrorLog::create([
+//                    'value' => $e->getMessage(),
+//                    'file' => $e->getFile(),
+//                    'line' => $e->getLine(),
+//                    'created_by' => auth()->id() ?? null,
+//                ]);
+//
+//                return redirect()->back()->with('toast', config('message.error'));
+//            }
+//
+//            // return response()->view('errors.500', [], 500);  // show 500 blade
+//        });
     })->
     create();
