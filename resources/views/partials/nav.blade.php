@@ -5,7 +5,7 @@
         <div class="flex justify-between h-16 items-center">
             <!-- Logo -->
             <div class="flex items-center">
-                <a href="{{ route('home') }}" class="text-2xl font-bold text-blue-600">MyBlog</a>
+                <a href="{{ route('home') }}" class="text-2xl font-bold text-blue-600">{{ config('app.name') }}</a>
             </div>
 
             <!-- Search Bar -->
