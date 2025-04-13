@@ -13,10 +13,10 @@ return new class extends Migration
     {
         Schema::create('error_logs', function (Blueprint $table) {
             $table->id();
-            $table->string('message');
-            $table->string('value');
-            $table->string('file');
-            $table->string('line');
+            $table->string('message')->nullable();
+            $table->string('value')->nullable();
+            $table->string('file')->nullable();
+            $table->string('line')->nullable();
             $table->foreignId('created_by')->nullable()->constrained('users');
             $table->timestamps();
         });
