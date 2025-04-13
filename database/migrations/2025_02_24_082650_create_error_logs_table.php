@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('error_logs', function (Blueprint $table) {
             $table->id();
             $table->string('message')->nullable();
-            $table->string('value')->nullable();
+            $table->longText('value')->nullable();
             $table->string('file')->nullable();
             $table->string('line')->nullable();
             $table->foreignId('created_by')->nullable()->constrained('users');
