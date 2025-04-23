@@ -24,3 +24,7 @@ Route::get('/about', [HomeController::class, 'about'])->name('about');
 
 Route::get('/unsubscribe', [BlogController::class, 'unsubscribe'])->name('unsubscribe');
 Route::post('/unsubscribe-confirm', [BlogController::class, 'unsubscribeConfirm'])->name('unsubscribe.confirm');
+
+Route::get('/gpt', [\App\Http\Controllers\GptController::class, 'index'])->name('gpt');
+Route::post('/chat', '\App\Http\Controllers\GptController');
+
