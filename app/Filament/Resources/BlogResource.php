@@ -12,6 +12,7 @@ use Filament\Forms\Components\Grid;
 use Filament\Forms\Components\RichEditor;
 use Filament\Forms\Components\Section;
 use Filament\Forms\Components\Select;
+use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Form;
 use Filament\Forms\Get;
@@ -40,30 +41,19 @@ class BlogResource extends Resource
     {
         return $form
             ->schema([
-                Section::make([
-                    TextInput::make('title')
-                        ->live(onBlur: true)
-                        ->afterStateUpdated(function (Get $get, Set $set, ?string $old, ?string $state) {
-                            if (($get('slug') ?? '') !== Str::slug($old)) {
-                                return;
-                            }
-
-                            $set('slug', Str::slug($state));
-                        })
-                        ->required(),
-                    Select::make('category_id')
-                        ->relationship('category', 'name')
-                        ->createOptionForm([
-                            Grid::make(2)
-                                ->schema([
-                                    TextInput::make('name')
+                Grid::make([
+                    'default' => 12,
+                    'sm' => 12,
+                    'md' => 12,
+                    'lg' => 12,
+                ])
+                    ->schema([
+                        Grid::make(1)
+                            ->schema([
+                                Section::make([
+                                    TextInput::make('title')
                                         ->live(onBlur: true)
-                                        ->afterStateUpdated(function (
-                                            Get $get,
-                                            Set $set,
-                                            ?string $old,
-                                            ?string $state
-                                        ) {
+                                        ->afterStateUpdated(function (Get $get, Set $set, ?string $old, ?string $state) {
                                             if (($get('slug') ?? '') !== Str::slug($old)) {
                                                 return;
                                             }
@@ -72,34 +62,63 @@ class BlogResource extends Resource
                                         })
                                         ->required(),
 
-                                    TextInput::make('slug')
+                                    Select::make('category_id')
+                                        ->relationship('category', 'name')
+                                        ->createOptionForm([
+                                            Grid::make(2)->schema([
+                                                TextInput::make('name')
+                                                    ->live(onBlur: true)
+                                                    ->afterStateUpdated(function (Get $get, Set $set, ?string $old, ?string $state) {
+                                                        if (($get('slug') ?? '') !== Str::slug($old)) {
+                                                            return;
+                                                        }
+
+                                                        $set('slug', Str::slug($state));
+                                                    })
+                                                    ->required(),
+
+                                                TextInput::make('slug')->required(),
+                                            ]),
+                                            RichEditor::make('description')->nullable()->columnSpanFull(),
+                                        ])
+                                        ->preload()
+                                        ->searchable()
                                         ->required(),
-                                ]),
-                            RichEditor::make('description')
-                                ->nullable()
-                                ->columnSpanFull(),
-                        ])
-                        ->preload()
-                        ->searchable()
-                        ->required(),
-                    Select::make('status')
-                        ->options(BlogStatus::class)
-                        ->default(BlogStatus::Published)
-                        ->required(),
-                    TextInput::make('slug')
-                        ->required(),
-                    FileUpload::make('thumbnail')
-                        ->nullable()
-                        ->image()
-                        ->imageEditor()
-                        ->columnSpanFull(),
-                ])->columns(2),
-                RichEditor::make('content')
-                    ->required()
-                    ->columnSpanFull(),
-                Checkbox::make('send_mail')
-                    ->label('Send mail to all subscribers')
-                    ->hidden(fn (?Model $record) => filled($record?->published_at)),
+
+                                    Select::make('status')
+                                        ->options(BlogStatus::class)
+                                        ->default(BlogStatus::Published)
+                                        ->required(),
+
+                                    TextInput::make('slug')->required(),
+
+                                    FileUpload::make('thumbnail')
+                                        ->nullable()
+                                        ->image()
+                                        ->imageEditor()
+                                        ->columnSpanFull(),
+                                ])->columns(2),
+
+                                RichEditor::make('content')
+                                    ->required()
+                                    ->columnSpanFull(),
+
+                                Checkbox::make('send_mail')
+                                    ->label('Send mail to all subscribers')
+                                    ->hidden(fn (?Model $record) => filled($record?->published_at)),
+                            ])
+                            ->columnSpan(8),
+
+//                        Textarea::make('ask')
+//                            ->label('Ask anymore question')
+//                            ->placeholder('Ask anything about this blog. We will reply as soon as possible.')
+//                            ->rows(25)
+//                            ->columnSpan(4),
+
+                        \Filament\Forms\Components\View::make('livewire.ai-chat')
+                            ->columnSpan(4),
+
+                    ]),
             ]);
     }
 
