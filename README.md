@@ -42,13 +42,21 @@ cd filament-blog
 composer install
 npm install
 cp .env.example .env
+```
+
+After copying the .env file, make sure to set your Anthropic API key:
+```aiignore
+ANTHROPIC_API_KEY=your_api_key_here
+```
+⚠️ Without ANTHROPIC_API_KEY, the AI Assistant will not work. <br><br>
+Then continue:
+```
 php artisan key:generate
 php artisan migrate --seed
 ```
 
 You're now ready to go! <br>
 If you prefer to run the project in Docker, simply execute:
-
 ```
 ./start
 ```
