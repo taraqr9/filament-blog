@@ -12,8 +12,8 @@ use Filament\Forms\Components\Grid;
 use Filament\Forms\Components\RichEditor;
 use Filament\Forms\Components\Section;
 use Filament\Forms\Components\Select;
-use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\TextInput;
+use Filament\Forms\Components\View;
 use Filament\Forms\Form;
 use Filament\Forms\Get;
 use Filament\Forms\Set;
@@ -26,7 +26,6 @@ use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Filters\SelectFilter;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 
 class BlogResource extends Resource
@@ -53,7 +52,12 @@ class BlogResource extends Resource
                                 Section::make([
                                     TextInput::make('title')
                                         ->live(onBlur: true)
-                                        ->afterStateUpdated(function (Get $get, Set $set, ?string $old, ?string $state) {
+                                        ->afterStateUpdated(function (
+                                            Get $get,
+                                            Set $set,
+                                            ?string $old,
+                                            ?string $state
+                                        ) {
                                             if (($get('slug') ?? '') !== Str::slug($old)) {
                                                 return;
                                             }
@@ -68,7 +72,12 @@ class BlogResource extends Resource
                                             Grid::make(2)->schema([
                                                 TextInput::make('name')
                                                     ->live(onBlur: true)
-                                                    ->afterStateUpdated(function (Get $get, Set $set, ?string $old, ?string $state) {
+                                                    ->afterStateUpdated(function (
+                                                        Get $get,
+                                                        Set $set,
+                                                        ?string $old,
+                                                        ?string $state
+                                                    ) {
                                                         if (($get('slug') ?? '') !== Str::slug($old)) {
                                                             return;
                                                         }
@@ -105,17 +114,11 @@ class BlogResource extends Resource
 
                                 Checkbox::make('send_mail')
                                     ->label('Send mail to all subscribers')
-                                    ->hidden(fn (?Model $record) => filled($record?->published_at)),
+                                    ->hidden(fn(?Model $record) => filled($record?->published_at)),
                             ])
                             ->columnSpan(8),
 
-//                        Textarea::make('ask')
-//                            ->label('Ask anymore question')
-//                            ->placeholder('Ask anything about this blog. We will reply as soon as possible.')
-//                            ->rows(25)
-//                            ->columnSpan(4),
-
-                        \Filament\Forms\Components\View::make('livewire.ai-chat')
+                        View::make('livewire.ai-chat')
                             ->columnSpan(4),
 
                     ]),
