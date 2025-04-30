@@ -111,17 +111,6 @@ class BlogResource extends Resource
 
                                 RichEditor::make('content')
                                     ->required()
-                                    ->columnSpanFull()->live(),
-
-                                Placeholder::make('char_count')
-                                    ->label('Character Count')
-                                    ->content(function ($get) {
-                                        $text = strip_tags($get('content') ?? '');
-                                        $chars = mb_strlen($text);
-
-                                        return "{$chars} characters";
-                                    })
-                                    ->live()
                                     ->columnSpanFull(),
 
                                 Checkbox::make('send_mail')
