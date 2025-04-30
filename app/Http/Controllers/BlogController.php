@@ -7,7 +7,6 @@ use App\Enums\Status;
 use App\Models\Blog;
 use App\Models\Category;
 use App\Models\Subscriber;
-use Filament\Widgets\StatsOverviewWidget\Stat;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
@@ -68,7 +67,7 @@ class BlogController extends Controller
         $subscribe = Subscriber::where('email', $request->email)
             ->first();
 
-        if (!$subscribe) {
+        if (! $subscribe) {
             Subscriber::create($data);
         }
 
@@ -76,14 +75,13 @@ class BlogController extends Controller
             $subscribe->update(['status' => Status::Active]);
         }
 
-
         return redirect()->back()->with('toast', config('message.subscriber.success'));
     }
 
     public function unsubscribe(Request $request): View
     {
         $data = $request->validate([
-            'email' => 'required|email'
+            'email' => 'required|email',
         ]);
 
         $email = $data['email'];
@@ -97,7 +95,7 @@ class BlogController extends Controller
 
         if ($unsubscribe && $unsubscribe->status === Status::Active) {
             $unsubscribe->update([
-                'status' => Status::InActive
+                'status' => Status::InActive,
             ]);
 
             return back()->with('toast', config('message.unsubscribe.success'));

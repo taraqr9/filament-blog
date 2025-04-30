@@ -49,15 +49,15 @@ class DatabaseSeeder extends Seeder
         ]);
         $superAdmin->syncRoles('super-admin');
 
-//        User::factory()->count(20)->create();
-//        foreach ($categories as $category) {
-//            Category::create([
-//                'name' => $category,
-//                'slug' => fake()->slug(),
-//                'description' => fake()->text(),
-//                'status' => Status::Active,
-//            ]);
-//        }
-//        Blog::factory()->count(120)->create();
+        //        User::factory()->count(20)->create();
+        //        foreach ($categories as $category) {
+        //            Category::create([
+        //                'name' => $category,
+        //                'slug' => fake()->slug(),
+        //                'description' => fake()->text(),
+        //                'status' => Status::Active,
+        //            ]);
+        //        }
+        //        Blog::factory()->count(120)->create();
     }
 }

@@ -3,7 +3,6 @@
 use App\Http\Controllers\BlogController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\UserController;
-use App\Models\Blog;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', [HomeController::class, 'index'])->name('home');
@@ -27,4 +26,3 @@ Route::post('/unsubscribe-confirm', [BlogController::class, 'unsubscribeConfirm'
 
 Route::get('/gpt', [\App\Http\Controllers\GptController::class, 'index'])->name('gpt');
 Route::post('/chat', '\App\Http\Controllers\GptController');
-

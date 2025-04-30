@@ -14,7 +14,6 @@ use Filament\Forms\Get;
 use Filament\Forms\Set;
 use Filament\Notifications\Notification;
 use Filament\Resources\Resource;
-use Filament\Support\Exceptions\Cancel;
 use Filament\Support\Exceptions\Halt;
 use Filament\Tables\Actions\BulkActionGroup;
 use Filament\Tables\Actions\DeleteAction;
@@ -72,7 +71,7 @@ class CategoryResource extends Resource
                 EditAction::make(),
                 DeleteAction::make()
                     ->before(function ($record, $action) {
-                        if($record->blogs()->exists()) {
+                        if ($record->blogs()->exists()) {
                             Notification::make()
                                 ->title('Cannot delete category')
                                 ->body('This category has associated blogs and cannot be deleted.')
@@ -81,7 +80,7 @@ class CategoryResource extends Resource
 
                             $action->cancel();
 
-                            throw new Halt();
+                            throw new Halt;
                         }
                     }),
             ])

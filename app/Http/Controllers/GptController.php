@@ -23,13 +23,13 @@ class GptController extends Controller
                     [
                         'role' => 'user',
                         'content' => $request->input('prompt', $request->post('content')),
-                    ]
-                ]
+                    ],
+                ],
             ]);
 
             return response()->json($response->json());
         } catch (Throwable $e) {
-            return "Error: ".$e->getMessage();
+            return 'Error: '.$e->getMessage();
         }
     }
 

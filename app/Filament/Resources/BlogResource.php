@@ -9,6 +9,7 @@ use App\Models\Blog;
 use Filament\Forms\Components\Checkbox;
 use Filament\Forms\Components\FileUpload;
 use Filament\Forms\Components\Grid;
+use Filament\Forms\Components\Placeholder;
 use Filament\Forms\Components\RichEditor;
 use Filament\Forms\Components\Section;
 use Filament\Forms\Components\Select;
@@ -110,11 +111,22 @@ class BlogResource extends Resource
 
                                 RichEditor::make('content')
                                     ->required()
+                                    ->columnSpanFull()->live(),
+
+                                Placeholder::make('char_count')
+                                    ->label('Character Count')
+                                    ->content(function ($get) {
+                                        $text = strip_tags($get('content') ?? '');
+                                        $chars = mb_strlen($text);
+
+                                        return "{$chars} characters";
+                                    })
+                                    ->live()
                                     ->columnSpanFull(),
 
                                 Checkbox::make('send_mail')
                                     ->label('Send mail to all subscribers')
-                                    ->hidden(fn(?Model $record) => filled($record?->published_at)),
+                                    ->hidden(fn (?Model $record) => filled($record?->published_at)),
                             ])
                             ->columnSpan(8),
 
