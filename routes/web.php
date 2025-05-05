@@ -3,6 +3,7 @@
 use App\Http\Controllers\BlogController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\UserController;
+use App\Livewire\BlogPreviewComponent;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', [HomeController::class, 'index'])->name('home');
@@ -10,6 +11,10 @@ Route::get('/', [HomeController::class, 'index'])->name('home');
 Route::group(['middleware' => ['auth']], function () {
     Route::get('/profile', [UserController::class, 'profile'])->name('profile');
     Route::put('/profile/{user}', [UserController::class, 'update'])->name('profile.update');
+
+    Route::get('/live-preview', BlogPreviewComponent::class);
+
+    Route::post('/chat', '\App\Http\Controllers\GptController');
 });
 
 Route::prefix('blogs')->group(function () {
@@ -24,5 +29,4 @@ Route::get('/about', [HomeController::class, 'about'])->name('about');
 Route::get('/unsubscribe', [BlogController::class, 'unsubscribe'])->name('unsubscribe');
 Route::post('/unsubscribe-confirm', [BlogController::class, 'unsubscribeConfirm'])->name('unsubscribe.confirm');
 
-Route::get('/gpt', [\App\Http\Controllers\GptController::class, 'index'])->name('gpt');
-Route::post('/chat', '\App\Http\Controllers\GptController');
+// Route::get('/gpt', [\App\Http\Controllers\GptController::class, 'index'])->name('gpt');
