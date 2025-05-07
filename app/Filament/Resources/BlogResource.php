@@ -86,9 +86,10 @@ class BlogResource extends Resource
                                                     })
                                                     ->required(),
 
-                                                TextInput::make('slug')->required(),
+                                                TextInput::make('slug')
+                                                    ->required()
+                                                    ->unique(),
                                             ]),
-                                            RichEditor::make('description')->nullable()->columnSpanFull(),
                                         ])
                                         ->preload()
                                         ->searchable()
@@ -119,7 +120,8 @@ class BlogResource extends Resource
                             ->columnSpan(8),
 
                         View::make('livewire.ai-chat')
-                            ->columnSpan(4),
+                            ->columnSpan(4)
+                            ->hidden(fn (string $context) => $context === 'view'),
 
                     ]),
             ]);

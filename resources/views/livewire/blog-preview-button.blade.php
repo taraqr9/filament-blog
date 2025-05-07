@@ -16,7 +16,7 @@
     >
         <div class="bg-white rounded-xl overflow-hidden relative shadow-xl"
              style="width: 50vw !important; height: 90vh !important;">
-            <button class="absolute top-3 right-4 ml-4 mt-4 font-bold z-10" @click="show = false">✖</button>
+            <p class="absolute top-3 right-4 ml-4 mt-4 font-bold z-10" @click="show = false">✖</p>
             <iframe
                 class="w-full h-full"
                 :src="(() => {

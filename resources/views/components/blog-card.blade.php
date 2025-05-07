@@ -7,6 +7,9 @@
     </a>
     <h3 class="text-lg font-semibold">{{ Str::limit($blog->title, 40) }}</h3>
     <p class="text-gray-600">{!! Str::limit($blog->content, 90) !!}</p>
-    <a href="{{ route('blog.show', $blog->slug) }}"
-       class="text-blue-600 hover:underline mt-2 block">Read more</a>
+    <div class="flex items-center justify-between mt-4 text-sm text-gray-600">
+        <a href="{{ route('blog.show', $blog->slug) }}" class="text-blue-600 hover:underline">Read more</a>
+        <span class="text-gray-500">{{ \App\Helper\Common::getReadingTimeAttribute($blog->content) }}</span>
+    </div>
+
 </div>
