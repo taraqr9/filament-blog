@@ -17,6 +17,7 @@ Route::group(['middleware' => ['auth']], function () {
 
 Route::prefix('blogs')->group(function () {
     Route::get('/', [BlogController::class, 'index'])->name('blog.index');
+    Route::get('/audio/{blogAudio}', [BlogController::class, 'audio'])->name('blog.audio');
     Route::get('/{slug}', [BlogController::class, 'show'])->name('blog.show');
 });
 

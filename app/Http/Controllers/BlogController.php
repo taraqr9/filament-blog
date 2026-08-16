@@ -4,8 +4,11 @@ namespace App\Http\Controllers;
 
 use App\Enums\BlogStatus;
 use App\Models\Blog;
+use App\Models\BlogAudio;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\View\View;
+use Symfony\Component\HttpFoundation\BinaryFileResponse;
 
 class BlogController extends Controller
 {
@@ -33,5 +36,12 @@ class BlogController extends Controller
             ->get();
 
         return view('blog.show', compact('blog', 'blogs'));
+    }
+
+    public function audio(BlogAudio $blogAudio): BinaryFileResponse
+    {
+        abort_unless($blogAudio->blog->status === BlogStatus::Published, 404);
+
+        return response()->file(Storage::disk('public')->path($blogAudio->audio_path));
     }
 }
