@@ -7,6 +7,8 @@ use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 /**
  * @property int $user_id
@@ -19,7 +21,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  */
 class Blog extends Model
 {
-    use HasFactory;
+    use HasFactory, SoftDeletes;
 
     protected $guarded = [];
 
@@ -30,6 +32,8 @@ class Blog extends Model
     protected static function booted(): void
     {
         static::creating(function (Blog $blog) {
+            $blog->status ??= BlogStatus::Published;
+
             if ($blog->status === BlogStatus::Published) {
                 $blog->published_at = Carbon::now();
             }
@@ -45,5 +49,15 @@ class Blog extends Model
     public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);
+    }
+
+    public function images(): HasMany
+    {
+        return $this->hasMany(BlogImage::class)->orderBy('sort_order');
+    }
+
+    public function audios(): HasMany
+    {
+        return $this->hasMany(BlogAudio::class)->orderBy('sort_order');
     }
 }
