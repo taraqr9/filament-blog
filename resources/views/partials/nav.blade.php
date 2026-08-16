@@ -16,7 +16,7 @@
 
             <div class="hidden md:flex items-center gap-3 shrink-0">
                 @guest()
-                    <a href="{{ route('filament.admin.auth.login') }}"
+                    <a href="{{ route('login') }}"
                        class="inline-flex items-center gap-2 rounded-full bg-theme-primary px-[18px] py-[10px] text-sm font-bold text-white hover:bg-theme-primary-dark transition-colors">
                         Sign in
                     </a>
@@ -36,7 +36,7 @@
                                class="block px-4 py-3 text-sm text-theme-body hover:bg-theme-surface-raised hover:text-theme-ink transition-colors">My
                                 Profile</a>
 
-                            <form method="POST" action="{{ route('filament.admin.auth.logout') }}" class="w-full">
+                            <form method="POST" action="{{ route('logout') }}" class="w-full">
                                 @csrf
                                 <button type="submit"
                                         class="block w-full text-left px-4 py-3 text-sm text-theme-accent hover:bg-theme-surface-raised transition-colors">
@@ -66,14 +66,14 @@
                 <a href="{{ route('about') }}" class="px-5 py-3.5 text-sm font-medium text-theme-body hover:text-theme-ink">About</a>
 
                 @guest()
-                    <a href="{{ route('filament.admin.auth.login') }}"
+                    <a href="{{ route('login') }}"
                        class="px-5 py-3.5 text-sm font-bold text-theme-primary">Sign in</a>
                 @endguest
 
                 @auth()
                     <a href="{{ route('profile') }}" class="px-5 py-3.5 text-sm font-medium text-theme-body hover:text-theme-ink">My
                         Profile</a>
-                    <form method="POST" action="{{ route('filament.admin.auth.logout') }}">
+                    <form method="POST" action="{{ route('logout') }}">
                         @csrf
                         <button type="submit" class="w-full text-left px-5 py-3.5 text-sm font-medium text-theme-accent">
                             Logout
