@@ -73,18 +73,15 @@ class UserResource extends Resource
                         ->default(UserStatus::Active)
                         ->columnSpanFull()
                         ->required(),
+                    Select::make('places')
+                        ->label('Accessible Places')
+                        ->helperText('Only these places will be visible to this user.')
+                        ->relationship('places', 'title')
+                        ->multiple()
+                        ->preload()
+                        ->searchable()
+                        ->columnSpanFull(),
                 ])->columns(2),
-
-                Section::make('Accessible Places')
-                    ->description('Only these places will be visible to this user.')
-                    ->schema([
-                        Select::make('places')
-                            ->relationship('places', 'title')
-                            ->multiple()
-                            ->preload()
-                            ->searchable()
-                            ->hiddenLabel(),
-                    ]),
 
             ]);
     }
