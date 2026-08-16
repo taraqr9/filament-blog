@@ -21,9 +21,10 @@ class BlogController extends Controller
 
     public function show($slug): View
     {
-        $blog = Blog::where('slug', $slug)
+        $blog = Blog::with(['user', 'images', 'audios'])
+            ->where('slug', $slug)
             ->where('status', BlogStatus::Published)
-            ->first();
+            ->firstOrFail();
 
         $blogs = Blog::where('status', BlogStatus::Published)
             ->where('id', '!=', $blog->id)

@@ -3,9 +3,8 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="icon" type="image/png" href="{{ asset('images/home.jpg') }}">
-    <title> {{ isset($page_title)? $page_title : config('app.name') }} </title>
     <link rel="icon" type="image/png" href="{{ asset('images/favicon.png') }}"/>
+    <title>{{ isset($page_title) ? $page_title : config('app.name') }}</title>
 
     @include('partials.styles')
 
@@ -16,10 +15,9 @@
 
         @yield('CSSheet')
     </style>
-
 </head>
 
-<body class="hold-transition sidebar-mini layout-navbar-fixed layout-fixed">
+<body class="min-h-screen flex flex-col bg-theme-bg font-sans text-theme-body antialiased">
 <div class="wrapper min-h-screen flex flex-col">
     @include('partials.impersonate-banner')
 

@@ -61,7 +61,7 @@ class BlogResource extends Resource
                             $set('slug', Str::slug($state));
                         })
                         ->required()
-                    ->columnSpan(2),
+                        ->columnSpan(2),
 
                     TextInput::make('slug')
                         ->required(),
