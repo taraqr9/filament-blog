@@ -17,7 +17,7 @@
 
 @section('content')
     <section id="hero-carousel" class="max-w-container mx-auto px-4 pt-8 sm:pt-12">
-        <div class="relative h-[560px] sm:h-[700px] md:h-[860px] lg:h-[980px] xl:h-[1080px] overflow-hidden rounded-theme shadow-theme-lg">
+        <div class="relative h-[60vh] min-h-[420px] overflow-hidden rounded-theme shadow-theme-lg">
             @foreach ($heroImages as $index => $image)
                 <img src="{{ asset($image) }}" alt="The Pantheon in Rome"
                      style="opacity: {{ $index === 0 ? 1 : 0 }}; transform: scale({{ $index === 0 ? 1.08 : 1 }});"
