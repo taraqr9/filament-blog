@@ -13,9 +13,10 @@ class DatabaseSeeder extends Seeder
         $this->call(ShieldSeeder::class);
 
         $superAdmin = User::firstOrCreate(
-            ['email' => 'admin@user.com'],
+            ['username' => 'admin'],
             User::factory()->raw([
                 'name' => 'Admin',
+                'email' => 'admin@user.com',
                 'password' => bcrypt('secret'),
                 'status' => UserStatus::Active,
             ])

@@ -25,6 +25,7 @@ class UserFactory extends Factory
     {
         return [
             'name' => fake()->name(),
+            'username' => fake()->unique()->userName(),
             'profession' => fake()->randomElement([
                 'Software Engineer',
                 'Graphic Designer',

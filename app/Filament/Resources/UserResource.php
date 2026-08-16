@@ -35,11 +35,17 @@ class UserResource extends Resource
                     TextInput::make('name')
                         ->placeholder('e.g. John Doe')
                         ->required(),
+                    TextInput::make('username')
+                        ->alphaDash()
+                        ->unique(ignoreRecord: true)
+                        ->placeholder('e.g. john_doe')
+                        ->helperText('Used to sign in. Must be unique.')
+                        ->required(),
                     TextInput::make('email')
                         ->email()
                         ->unique(ignoreRecord: true)
                         ->placeholder('e.g. john.doe@example.com')
-                        ->required(),
+                        ->nullable(),
                     TextInput::make('phone')
                         ->tel()
                         ->placeholder('e.g. 01234567890'),
@@ -89,8 +95,11 @@ class UserResource extends Resource
                     ->searchable(),
                 TextColumn::make('name')
                     ->searchable(),
-                TextColumn::make('email')
+                TextColumn::make('username')
                     ->searchable(),
+                TextColumn::make('email')
+                    ->searchable()
+                    ->placeholder('—'),
                 TextColumn::make('roles.name'),
                 StatusColumn::make(),
             ])

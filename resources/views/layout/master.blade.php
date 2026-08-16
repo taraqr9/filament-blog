@@ -21,6 +21,8 @@
 
 <body class="hold-transition sidebar-mini layout-navbar-fixed layout-fixed">
 <div class="wrapper min-h-screen flex flex-col">
+    @include('partials.impersonate-banner')
+
     @include('partials.nav')
 
     <main class="flex-1">
