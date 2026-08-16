@@ -14,8 +14,6 @@ class BlogPreviewComponent extends Component
 
     public $userAvatar = '/images/person.png';
 
-    public $userProfession = '';
-
     public $createdAt;
 
     public function mount()
@@ -25,7 +23,6 @@ class BlogPreviewComponent extends Component
         $this->createdAt = now()->format('F j, Y g:i A');
 
         $this->userName = auth()->user()->name;
-        $this->userProfession = auth()->user()->profession;
     }
 
     public function render()
@@ -35,7 +32,6 @@ class BlogPreviewComponent extends Component
             'content' => $this->content,
             'userName' => $this->userName,
             'userAvatar' => $this->userAvatar,
-            'userProfession' => $this->userProfession,
             'createdAt' => $this->createdAt,
         ]);
     }

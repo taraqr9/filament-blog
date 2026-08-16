@@ -21,7 +21,6 @@
                             <div>
                                 <a href="#" rel="author"
                                    class="text-xl font-bold text-gray-900 dark:text-white">{{ $blog->user->name }}</a>
-                                <p class="text-base text-gray-500 dark:text-gray-400">{{ $blog->user->profession }}</p>
                                 <p class="text-base text-gray-500 dark:text-gray-400">
                                     <time pubdate datetime="2022-02-08"
                                           title="February 8th, 2022">{{ Common::dateTimeFormat($blog->created_at) }}</time>

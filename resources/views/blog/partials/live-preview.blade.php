@@ -10,7 +10,6 @@
                              alt="Author">
                         <div>
                             <a href="#" class="text-xl font-bold text-gray-900 dark:text-white">{{ $userName }}</a>
-                            <p class="text-base text-gray-500 dark:text-gray-400">{{ $userProfession }}</p>
                             <p class="text-base text-gray-500 dark:text-gray-400">
                                 <time>{{ $createdAt }}</time>
                             </p>

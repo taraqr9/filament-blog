@@ -45,7 +45,7 @@ class UserResource extends Resource
                         ->email()
                         ->unique(ignoreRecord: true)
                         ->placeholder('e.g. john.doe@example.com')
-                        ->nullable(),
+                        ->required(),
                     TextInput::make('phone')
                         ->tel()
                         ->placeholder('e.g. 01234567890'),
@@ -55,9 +55,6 @@ class UserResource extends Resource
                         ->preload()
                         ->searchable()
                         ->required(),
-                    TextInput::make('profession')
-                        ->placeholder('e.g. Software Engineer, Teacher, Lawyer')
-                        ->columnSpanFull(),
                 ])->columns(2),
                 Section::make([
                     TextInput::make('password')
@@ -109,8 +106,7 @@ class UserResource extends Resource
                 TextColumn::make('username')
                     ->searchable(),
                 TextColumn::make('email')
-                    ->searchable()
-                    ->placeholder('—'),
+                    ->searchable(),
                 TextColumn::make('roles.name'),
                 StatusColumn::make(),
             ])

@@ -16,7 +16,7 @@ use Spatie\Permission\Traits\HasRoles;
 /**
  * @property string $name
  * @property string $username
- * @property string|null $email
+ * @property string $email
  * @property string $phone
  * @property string $password
  * @property string $avatar

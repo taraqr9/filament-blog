@@ -15,7 +15,6 @@ return new class extends Migration
     {
         Schema::table('users', function (Blueprint $table) {
             $table->string('username')->nullable()->after('name');
-            $table->string('email')->nullable()->change();
         });
 
         foreach (DB::table('users')->whereNull('username')->get(['id', 'name', 'email']) as $user) {
@@ -42,7 +41,6 @@ return new class extends Migration
     {
         Schema::table('users', function (Blueprint $table) {
             $table->dropColumn('username');
-            $table->string('email')->nullable(false)->change();
         });
     }
 };
