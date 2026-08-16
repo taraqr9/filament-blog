@@ -6,122 +6,101 @@ use App\Enums\BlogStatus;
 use App\Filament\Resources\BlogResource\Pages;
 use App\Filament\Table\Columns\BlogStatusColumn;
 use App\Models\Blog;
-use Filament\Forms\Components\Checkbox;
+use BackedEnum;
+use Filament\Actions\BulkActionGroup;
+use Filament\Actions\DeleteAction;
+use Filament\Actions\DeleteBulkAction;
+use Filament\Actions\EditAction;
+use Filament\Actions\ViewAction;
 use Filament\Forms\Components\FileUpload;
-use Filament\Forms\Components\Grid;
 use Filament\Forms\Components\RichEditor;
-use Filament\Forms\Components\Section;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
-use Filament\Forms\Components\View;
-use Filament\Forms\Form;
-use Filament\Forms\Get;
-use Filament\Forms\Set;
 use Filament\Resources\Resource;
-use Filament\Tables;
-use Filament\Tables\Actions\DeleteAction;
-use Filament\Tables\Actions\EditAction;
-use Filament\Tables\Actions\ViewAction;
+use Filament\Schemas\Components\Grid;
+use Filament\Schemas\Components\Section;
+use Filament\Schemas\Components\Utilities\Get;
+use Filament\Schemas\Components\Utilities\Set;
+use Filament\Schemas\Schema;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Filters\SelectFilter;
 use Filament\Tables\Table;
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Str;
 
 class BlogResource extends Resource
 {
     protected static ?string $model = Blog::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
+    protected static string | BackedEnum | null $navigationIcon = 'heroicon-o-rectangle-stack';
 
     protected static bool $hasTitleCaseModelLabel = true;
 
-    public static function form(Form $form): Form
+    public static function form(Schema $schema): Schema
     {
-        return $form
-            ->schema([
-                Grid::make([
-                    'default' => 12,
-                    'sm' => 12,
-                    'md' => 12,
-                    'lg' => 12,
-                ])
-                    ->schema([
-                        Grid::make(1)
-                            ->schema([
-                                Section::make([
-                                    TextInput::make('title')
-                                        ->live(onBlur: true)
-                                        ->afterStateUpdated(function (
-                                            Get $get,
-                                            Set $set,
-                                            ?string $old,
-                                            ?string $state
-                                        ) {
-                                            if (($get('slug') ?? '') !== Str::slug($old)) {
-                                                return;
-                                            }
+        return $schema
+            ->components([
+                Section::make([
+                    TextInput::make('title')
+                        ->live(onBlur: true)
+                        ->afterStateUpdated(function (
+                            Get $get,
+                            Set $set,
+                            ?string $old,
+                            ?string $state
+                        ) {
+                            if (($get('slug') ?? '') !== Str::slug($old)) {
+                                return;
+                            }
 
-                                            $set('slug', Str::slug($state));
-                                        })
-                                        ->required(),
+                            $set('slug', Str::slug($state));
+                        })
+                        ->required(),
 
-                                    Select::make('category_id')
-                                        ->relationship('category', 'name')
-                                        ->createOptionForm([
-                                            Grid::make(2)->schema([
-                                                TextInput::make('name')
-                                                    ->live(onBlur: true)
-                                                    ->afterStateUpdated(function (
-                                                        Get $get,
-                                                        Set $set,
-                                                        ?string $old,
-                                                        ?string $state
-                                                    ) {
-                                                        if (($get('slug') ?? '') !== Str::slug($old)) {
-                                                            return;
-                                                        }
+                    Select::make('category_id')
+                        ->relationship('category', 'name')
+                        ->createOptionForm([
+                            Grid::make(2)->schema([
+                                TextInput::make('name')
+                                    ->live(onBlur: true)
+                                    ->afterStateUpdated(function (
+                                        Get $get,
+                                        Set $set,
+                                        ?string $old,
+                                        ?string $state
+                                    ) {
+                                        if (($get('slug') ?? '') !== Str::slug($old)) {
+                                            return;
+                                        }
 
-                                                        $set('slug', Str::slug($state));
-                                                    })
-                                                    ->required(),
+                                        $set('slug', Str::slug($state));
+                                    })
+                                    ->required(),
 
-                                                TextInput::make('slug')->required(),
-                                            ]),
-                                            RichEditor::make('description')->nullable()->columnSpanFull(),
-                                        ])
-                                        ->preload()
-                                        ->searchable()
-                                        ->required(),
+                                TextInput::make('slug')->required(),
+                            ]),
+                            RichEditor::make('description')->nullable()->columnSpanFull(),
+                        ])
+                        ->preload()
+                        ->searchable()
+                        ->required(),
 
-                                    Select::make('status')
-                                        ->options(BlogStatus::class)
-                                        ->default(BlogStatus::Published)
-                                        ->required(),
+                    Select::make('status')
+                        ->options(BlogStatus::class)
+                        ->default(BlogStatus::Published)
+                        ->required(),
 
-                                    TextInput::make('slug')->required(),
+                    TextInput::make('slug')->required(),
 
-                                    FileUpload::make('thumbnail')
-                                        ->nullable()
-                                        ->image()
-                                        ->imageEditor()
-                                        ->columnSpanFull(),
-                                ])->columns(2),
+                    FileUpload::make('thumbnail')
+                        ->nullable()
+                        ->image()
+                        ->imageEditor()
+                        ->columnSpanFull(),
+                ])->columns(2),
 
-                                RichEditor::make('content')
-                                    ->required()
-                                    ->columnSpanFull(),
-
-                                Checkbox::make('send_mail')
-                                    ->label('Send mail to all subscribers')
-                                    ->hidden(fn (?Model $record) => filled($record?->published_at)),
-                            ])
-                            ->columnSpan(8),
-
-                        View::make('livewire.ai-chat')
-                            ->columnSpan(4),
-
-                    ]),
+                RichEditor::make('content')
+                    ->required()
+                    ->columnSpanFull(),
             ]);
     }
 
@@ -148,8 +127,8 @@ class BlogResource extends Resource
                 DeleteAction::make(),
             ])
             ->bulkActions([
-                Tables\Actions\BulkActionGroup::make([
-                    Tables\Actions\DeleteBulkAction::make(),
+                BulkActionGroup::make([
+                    DeleteBulkAction::make(),
                 ]),
             ]);
     }

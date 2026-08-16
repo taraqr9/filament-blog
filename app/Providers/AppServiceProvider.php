@@ -3,7 +3,7 @@
 namespace App\Providers;
 
 use App\Http\Responses\LoginResponse;
-use Filament\Http\Responses\Auth\Contracts\LoginResponse as LoginResponseContract;
+use Filament\Auth\Http\Responses\Contracts\LoginResponse as LoginResponseContract;
 use Illuminate\Pagination\Paginator;
 use Illuminate\Support\ServiceProvider;
 

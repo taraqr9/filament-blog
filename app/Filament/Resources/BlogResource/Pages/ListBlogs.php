@@ -6,8 +6,8 @@ use App\Enums\BlogStatus;
 use App\Filament\Resources\BlogResource;
 use App\Models\Blog;
 use Filament\Actions;
-use Filament\Resources\Components\Tab;
 use Filament\Resources\Pages\ListRecords;
+use Filament\Schemas\Components\Tabs\Tab;
 use Illuminate\Database\Eloquent\Builder;
 
 class ListBlogs extends ListRecords
