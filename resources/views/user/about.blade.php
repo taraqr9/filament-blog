@@ -2,76 +2,42 @@
 
 @section('content')
     <section class="max-w-container mx-auto px-4 pt-8 sm:pt-12">
-        <div class="relative h-[320px] sm:h-[420px] overflow-hidden rounded-theme shadow-theme-lg">
-            <img src="{{ asset('images/pantheon-hero/ext-3.jpg') }}" alt="The Pantheon, Rome"
-                 class="absolute inset-0 h-full w-full object-cover">
-            <div class="absolute inset-0 bg-gradient-to-t from-theme-bg via-black/50 to-black/10"></div>
-
-            <div class="absolute inset-x-0 bottom-0 px-6 sm:px-10 pb-8">
-                <span class="inline-flex items-center gap-2 text-xs sm:text-sm font-semibold uppercase tracking-[0.35em] text-white/70">
-                    About
-                </span>
-                <h1 class="mt-3 text-3xl sm:text-4xl lg:text-5xl font-extrabold text-white tracking-tight max-w-2xl">
-                    The story behind the stories
-                </h1>
-            </div>
-        </div>
+        <x-hero-carousel />
     </section>
 
-    <section class="max-w-container mx-auto px-4 py-12 sm:py-16">
-        <div class="grid grid-cols-1 lg:grid-cols-3 gap-10">
-            <div class="lg:col-span-2 space-y-5 text-theme-body leading-relaxed">
-                <p>
-                    An experienced IT professional currently serving as the Chief Services Officer (CSO) at BOL.
-                    With a strong background in IT-enabled services, infrastructure management, and software
-                    development, I have led multiple teams, ensuring efficient service delivery and technological
-                    innovation.
-                </p>
-                <p>
-                    Over the years, I have successfully managed technical departments, restructured customer
-                    service teams, optimized network infrastructure, and developed IT governance policies. My
-                    expertise spans network engineering, data infrastructure, and skill development.
-                </p>
-                <p>
-                    Passionate about innovation, technology, and leadership, I continuously strive to enhance IT
-                    solutions and improve business operations. Let's connect and collaborate on transformative
-                    tech initiatives!
-                </p>
-            </div>
+    <section class="max-w-container mx-auto px-4 py-12 sm:py-16 text-center">
+        <span class="inline-flex items-center gap-2 text-xs sm:text-sm font-semibold uppercase tracking-[0.35em] text-theme-primary">
+            <span class="h-px w-8 bg-theme-primary/50"></span>
+            About
+            <span class="h-px w-8 bg-theme-primary/50"></span>
+        </span>
+        <h1 class="mt-6 text-4xl sm:text-5xl font-extrabold tracking-tight text-theme-ink max-w-2xl mx-auto">
+            The story behind the stories
+        </h1>
 
-            <aside class="rounded-theme border border-theme-line bg-theme-surface p-6 shadow-theme h-fit">
-                <div class="flex items-center gap-3 mb-6">
-                    <div class="flex items-center justify-center size-12 rounded-full bg-theme-primary/15 text-theme-primary font-extrabold text-lg shrink-0">
-                        KH
-                    </div>
-                    <div>
-                        <h2 class="text-base font-bold text-theme-ink leading-tight">Kazi Akramul Haque</h2>
-                        <p class="text-sm text-theme-muted">Chief Services Officer, BOL</p>
-                    </div>
-                </div>
-
-                <div class="flex flex-col gap-3" x-data="{ showNumber: false }">
-                    <a rel="noopener" target="_blank" href="https://www.linkedin.com/in/tasinkazi"
-                       class="flex items-center gap-3 rounded-theme-sm border border-theme-line bg-theme-surface-raised px-4 py-3 text-sm font-semibold text-theme-ink hover:border-theme-primary/50 hover:text-theme-primary transition-colors">
-                        <img class="size-5" src="{{ asset('images/icons/linkedin.png') }}" alt="LinkedIn"/>
-                        LinkedIn
-                    </a>
-                    <a rel="noopener" target="_blank" href="mailto:tasinkazi@gmail.com"
-                       class="flex items-center gap-3 rounded-theme-sm border border-theme-line bg-theme-surface-raised px-4 py-3 text-sm font-semibold text-theme-ink hover:border-theme-primary/50 hover:text-theme-primary transition-colors">
-                        <img class="size-5" src="{{ asset('images/icons/mail.png') }}" alt="Email"/>
-                        Email me
-                    </a>
-                    <button type="button" @click="showNumber = !showNumber"
-                            class="flex items-center gap-3 rounded-theme-sm border border-theme-line bg-theme-surface-raised px-4 py-3 text-sm font-semibold text-theme-ink hover:border-theme-primary/50 hover:text-theme-primary transition-colors text-left">
-                        <img class="size-5" src="{{ asset('images/icons/telephone.png') }}" alt="Phone"/>
-                        <span x-text="showNumber ? '+88001976672358' : 'Call me'"></span>
-                    </button>
-                </div>
-            </aside>
+        <div class="mt-8 max-w-2xl mx-auto space-y-5 text-left text-theme-body leading-relaxed">
+            <p>
+                Rome rewards the curious &mdash; but its history rarely fits on a plaque. This project was built to
+                close that gap: real places, told as stories, with the option to simply press play and let an
+                audio guide walk you through it while you look up rather than down at a screen.
+            </p>
+            <p>
+                Every post pairs a written article with a narrated version, recorded in multiple languages, so the
+                experience travels with you &mdash; whether you're reading at home before a trip or standing in
+                front of the Pantheon with your phone in your pocket and your headphones in.
+            </p>
+            <p>
+                It's a small, growing collection for now. New places and new languages get added as they're
+                researched, written, and recorded properly &mdash; not rushed.
+            </p>
         </div>
-    </section>
-@endsection
 
-@section('JScript')
-    <script src="{{ asset('js/alpinejs-3.13.3.js') }}"></script>
+        <a href="{{ route('blog.index') }}"
+           class="mt-10 inline-flex items-center gap-2 rounded-full bg-theme-primary px-8 py-3.5 text-sm font-bold text-white shadow-theme-lg hover:bg-theme-primary-dark hover:scale-[1.03] transition-all">
+            Explore blogs
+            <svg class="size-4" viewBox="0 0 20 20" fill="currentColor">
+                <path fill-rule="evenodd" d="M3 10a.75.75 0 01.75-.75h10.638L10.23 5.29a.75.75 0 111.04-1.08l5.5 5.25a.75.75 0 010 1.08l-5.5 5.25a.75.75 0 11-1.04-1.08l4.158-3.96H3.75A.75.75 0 013 10z" clip-rule="evenodd" />
+            </svg>
+        </a>
+    </section>
 @endsection
