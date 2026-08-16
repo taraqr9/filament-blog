@@ -3,8 +3,6 @@
 namespace App\Models;
 
 use App\Enums\BlogStatus;
-use App\Enums\Status;
-use App\Jobs\SubscriberNotificationJob;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -17,7 +15,6 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  * @property string $title
  * @property string $slug
  * @property string $content
- * @property bool $send_mail
  * @property BlogStatus $status
  * @property Carbon published_at
  */
@@ -39,26 +36,8 @@ class Blog extends Model
             }
         });
 
-        static::created(function (Blog $blog) {
-            if ($blog->status === BlogStatus::Published && $blog->send_mail === true) {
-                $emails = Subscriber::where('status', Status::Active)->pluck('email')->toArray();
-
-                if (! empty($emails)) {
-                    $emails[] = auth()->user()->email;
-                    SubscriberNotificationJob::dispatch($blog, $emails);
-                }
-            }
-        });
-
         static::updating(function (Blog $blog) {
-            if ($blog->status === BlogStatus::Published && $blog->send_mail === true && $blog->getOriginal('published_at') === null) {
-                $emails = Subscriber::where('status', Status::Active)->pluck('email')->toArray();
-
-                if (! empty($emails)) {
-                    $emails[] = auth()->user()->email;
-                    SubscriberNotificationJob::dispatch($blog, $emails);
-                }
-
+            if ($blog->status === BlogStatus::Published && $blog->getOriginal('published_at') === null) {
                 $blog->published_at = Carbon::now();
             }
         });

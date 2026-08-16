@@ -18,11 +18,6 @@ Route::group(['middleware' => ['auth']], function () {
 Route::prefix('blogs')->group(function () {
     Route::get('/', [BlogController::class, 'index'])->name('blog.index');
     Route::get('/{slug}', [BlogController::class, 'show'])->name('blog.show');
-
-    Route::post('/subscribe', [BlogController::class, 'subscribe'])->name('blog.subscribe');
 });
 
 Route::get('/about', [HomeController::class, 'about'])->name('about');
-
-Route::get('/unsubscribe', [BlogController::class, 'unsubscribe'])->name('unsubscribe');
-Route::post('/unsubscribe-confirm', [BlogController::class, 'unsubscribeConfirm'])->name('unsubscribe.confirm');
