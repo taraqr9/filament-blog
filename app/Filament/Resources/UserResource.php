@@ -55,8 +55,6 @@ class UserResource extends Resource
                         ->preload()
                         ->searchable()
                         ->required(),
-                ])->columns(2),
-                Section::make([
                     TextInput::make('password')
                         ->required(fn (?User $record) => ! $record?->exists)
                         ->dehydrated(fn ($state) => ! empty($state))
@@ -66,7 +64,7 @@ class UserResource extends Resource
                         ->dehydrated(false)
                         ->same('password')
                         ->required(fn (?User $record) => ! $record?->exists)->password(),
-                ])->columns(2),
+                ])->columns(3),
                 Section::make([
                     FileUpload::make('avatar')
                         ->nullable()
