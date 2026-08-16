@@ -47,7 +47,7 @@ class BlogResource extends Resource
             ->components([
                 Section::make([
                     TextInput::make('title')
-                        ->live(onBlur: true)
+                        ->live(debounce: 500)
                         ->afterStateUpdated(function (
                             Get $get,
                             Set $set,
@@ -60,18 +60,19 @@ class BlogResource extends Resource
 
                             $set('slug', Str::slug($state));
                         })
-                        ->required(),
+                        ->required()
+                    ->columnSpan(2),
 
                     TextInput::make('slug')
                         ->required(),
 
-                    FileUpload::make('thumbnail')
-                        ->image()
-                        ->imageEditor()
+                    RichEditor::make('content')
                         ->required()
                         ->columnSpanFull(),
 
-                    RichEditor::make('content')
+                    FileUpload::make('thumbnail')
+                        ->image()
+                        ->imageEditor()
                         ->required()
                         ->columnSpanFull(),
 
