@@ -83,6 +83,17 @@ class UserResource extends Resource
                     ->columns(3)
                     ->required(),
 
+                Section::make('Accessible Places')
+                    ->description('Only these places will be visible to this user.')
+                    ->schema([
+                        Select::make('places')
+                            ->relationship('places', 'title')
+                            ->multiple()
+                            ->preload()
+                            ->searchable()
+                            ->hiddenLabel(),
+                    ]),
+
             ]);
     }
 
