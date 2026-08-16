@@ -81,7 +81,9 @@ class UserResource extends Resource
                         ->preload()
                         ->searchable()
                         ->columnSpanFull(),
-                ])->columns(2),
+                ])
+                    ->columns(2)
+                    ->columnSpanFull(),
 
             ]);
     }
