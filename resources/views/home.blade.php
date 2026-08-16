@@ -16,48 +16,50 @@
 @endphp
 
 @section('content')
-    <section id="hero-carousel" class="relative min-h-[640px] h-[88vh] max-h-[920px] overflow-hidden">
-        @foreach ($heroImages as $index => $image)
-            <img src="{{ asset($image) }}" alt="The Pantheon in Rome"
-                 style="opacity: {{ $index === 0 ? 1 : 0 }}; transform: scale({{ $index === 0 ? 1.08 : 1 }});"
-                 class="hero-slide absolute inset-0 h-full w-full object-cover will-change-transform transition-[opacity,transform] duration-[1200ms,6000ms] ease-out">
-        @endforeach
+    <section id="hero-carousel" class="max-w-container mx-auto px-4 pt-8 sm:pt-12">
+        <div class="relative min-h-[720px] h-[92vh] max-h-[1040px] overflow-hidden rounded-theme shadow-theme-lg">
+            @foreach ($heroImages as $index => $image)
+                <img src="{{ asset($image) }}" alt="The Pantheon in Rome"
+                     style="opacity: {{ $index === 0 ? 1 : 0 }}; transform: scale({{ $index === 0 ? 1.08 : 1 }});"
+                     class="hero-slide absolute inset-0 h-full w-full object-cover will-change-transform transition-[opacity,transform] duration-[1200ms,6000ms] ease-out">
+            @endforeach
 
-        <div class="absolute inset-0 bg-gradient-to-b from-black/70 via-black/35 to-theme-bg"></div>
-        <div class="absolute inset-0 bg-[radial-gradient(ellipse_at_center,transparent_35%,rgba(0,0,0,0.45)_100%)]"></div>
+            <div class="absolute inset-0 bg-gradient-to-b from-black/70 via-black/35 to-black/70"></div>
+            <div class="absolute inset-0 bg-[radial-gradient(ellipse_at_center,transparent_35%,rgba(0,0,0,0.45)_100%)]"></div>
 
-        <div class="relative h-full max-w-container mx-auto px-4 flex flex-col items-center justify-center text-center">
-            <span class="inline-flex items-center gap-2 text-xs sm:text-sm font-semibold uppercase tracking-[0.35em] text-white/70">
-                <span class="h-px w-8 bg-white/50"></span>
-                Rome &middot; Italy
-                <span class="h-px w-8 bg-white/50"></span>
-            </span>
-            <h1 class="mt-6 text-5xl sm:text-6xl lg:text-7xl font-extrabold tracking-tight text-white drop-shadow-sm max-w-3xl">
-                Stories worth listening to
-            </h1>
-            <p class="mt-6 text-lg sm:text-xl text-white/80 max-w-2xl mx-auto">
-                Read the article, or press play and let the audio guide take you there &mdash; in the language you
-                choose.
-            </p>
-            <a href="#latest"
-               class="mt-10 inline-flex items-center gap-2 rounded-full bg-theme-primary px-8 py-3.5 text-sm font-bold text-white shadow-theme-lg hover:bg-theme-primary-dark hover:scale-[1.03] transition-all">
-                Explore blogs
-                <svg class="size-4" viewBox="0 0 20 20" fill="currentColor">
-                    <path fill-rule="evenodd" d="M3 10a.75.75 0 01.75-.75h10.638L10.23 5.29a.75.75 0 111.04-1.08l5.5 5.25a.75.75 0 010 1.08l-5.5 5.25a.75.75 0 11-1.04-1.08l4.158-3.96H3.75A.75.75 0 013 10z" clip-rule="evenodd" />
-                </svg>
+            <div class="relative h-full px-6 flex flex-col items-center justify-center text-center">
+                <span class="inline-flex items-center gap-2 text-xs sm:text-sm font-semibold uppercase tracking-[0.35em] text-white/70">
+                    <span class="h-px w-8 bg-white/50"></span>
+                    Rome &middot; Italy
+                    <span class="h-px w-8 bg-white/50"></span>
+                </span>
+                <h1 class="mt-6 text-5xl sm:text-6xl lg:text-7xl font-extrabold tracking-tight text-white drop-shadow-sm max-w-3xl">
+                    Stories worth listening to
+                </h1>
+                <p class="mt-6 text-lg sm:text-xl text-white/80 max-w-2xl mx-auto">
+                    Read the article, or press play and let the audio guide take you there &mdash; in the language
+                    you choose.
+                </p>
+                <a href="#latest"
+                   class="mt-10 inline-flex items-center gap-2 rounded-full bg-theme-primary px-8 py-3.5 text-sm font-bold text-white shadow-theme-lg hover:bg-theme-primary-dark hover:scale-[1.03] transition-all">
+                    Explore blogs
+                    <svg class="size-4" viewBox="0 0 20 20" fill="currentColor">
+                        <path fill-rule="evenodd" d="M3 10a.75.75 0 01.75-.75h10.638L10.23 5.29a.75.75 0 111.04-1.08l5.5 5.25a.75.75 0 010 1.08l-5.5 5.25a.75.75 0 11-1.04-1.08l4.158-3.96H3.75A.75.75 0 013 10z" clip-rule="evenodd" />
+                    </svg>
+                </a>
+            </div>
+
+            <div class="absolute bottom-7 inset-x-0 flex items-center justify-center gap-2">
+                @foreach ($heroImages as $index => $image)
+                    <span class="hero-dot h-1.5 rounded-full transition-all duration-500 {{ $index === 0 ? 'w-8 bg-white' : 'w-1.5 bg-white/40' }}"></span>
+                @endforeach
+            </div>
+
+            <a href="https://commons.wikimedia.org" target="_blank" rel="noopener"
+               class="absolute bottom-2 right-3 text-[11px] text-white/50 hover:text-white/80 transition-colors">
+                Photos: Wikimedia Commons
             </a>
         </div>
-
-        <div class="absolute bottom-7 inset-x-0 flex items-center justify-center gap-2">
-            @foreach ($heroImages as $index => $image)
-                <span class="hero-dot h-1.5 rounded-full transition-all duration-500 {{ $index === 0 ? 'w-8 bg-white' : 'w-1.5 bg-white/40' }}"></span>
-            @endforeach
-        </div>
-
-        <a href="https://commons.wikimedia.org" target="_blank" rel="noopener"
-           class="absolute bottom-2 right-3 text-[11px] text-white/50 hover:text-white/80 transition-colors">
-            Photos: Wikimedia Commons
-        </a>
     </section>
 
     <section id="latest" class="max-w-container mx-auto px-4 py-12 sm:py-16">
