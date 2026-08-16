@@ -33,9 +33,9 @@ class PlaceResource extends Resource
 {
     protected static ?string $model = Place::class;
 
-    protected static string | BackedEnum | null $navigationIcon = 'heroicon-o-map-pin';
+    protected static string|BackedEnum|null $navigationIcon = 'heroicon-o-map-pin';
 
-    protected static string | UnitEnum | null $navigationGroup = 'Locations';
+    protected static string|UnitEnum|null $navigationGroup = 'Locations';
 
     protected static ?int $navigationSort = 3;
 

@@ -31,7 +31,7 @@ class BlogResource extends Resource
 {
     protected static ?string $model = Blog::class;
 
-    protected static string | BackedEnum | null $navigationIcon = 'heroicon-o-rectangle-stack';
+    protected static string|BackedEnum|null $navigationIcon = 'heroicon-o-rectangle-stack';
 
     protected static bool $hasTitleCaseModelLabel = true;
 

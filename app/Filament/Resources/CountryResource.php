@@ -28,9 +28,9 @@ class CountryResource extends Resource
 {
     protected static ?string $model = Country::class;
 
-    protected static string | BackedEnum | null $navigationIcon = 'heroicon-o-globe-alt';
+    protected static string|BackedEnum|null $navigationIcon = 'heroicon-o-globe-alt';
 
-    protected static string | UnitEnum | null $navigationGroup = 'Locations';
+    protected static string|UnitEnum|null $navigationGroup = 'Locations';
 
     protected static ?int $navigationSort = 1;
 
