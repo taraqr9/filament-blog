@@ -15,6 +15,7 @@ class DatabaseSeeder extends Seeder
         $superAdmin = User::firstOrCreate(
             ['username' => 'admin'],
             User::factory()->raw([
+                'username' => 'admin',
                 'name' => 'Admin',
                 'email' => 'admin@user.com',
                 'password' => bcrypt('secret'),
