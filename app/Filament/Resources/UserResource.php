@@ -11,9 +11,9 @@ use Filament\Actions\BulkActionGroup;
 use Filament\Actions\DeleteBulkAction;
 use Filament\Actions\EditAction;
 use Filament\Forms\Components\FileUpload;
-use Filament\Forms\Components\Radio;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
+use Filament\Forms\Components\Toggle;
 use Filament\Resources\Resource;
 use Filament\Schemas\Components\Section;
 use Filament\Schemas\Schema;
@@ -69,11 +69,13 @@ class UserResource extends Resource
                         ->image()
                         ->imageEditor()
                         ->columnSpanFull(),
-                    Radio::make('status')
-                        ->options(UserStatus::class)
-                        ->default(UserStatus::Active)
-                        ->columnSpanFull()
-                        ->required(),
+                    Toggle::make('status')
+                        ->label('Active')
+                        ->afterStateHydrated(function (Toggle $component, ?User $record) {
+                            $component->state(($record?->status ?? UserStatus::Active) === UserStatus::Active);
+                        })
+                        ->dehydrateStateUsing(fn (bool $state) => $state ? UserStatus::Active : UserStatus::InActive)
+                        ->columnSpanFull(),
                 ])
                     ->columns(3)
                     ->columnSpanFull(),
