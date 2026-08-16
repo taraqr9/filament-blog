@@ -1,14 +1,34 @@
 @extends('layout.master')
 
-@section('content')
-    <section class="relative overflow-hidden">
-        <div class="absolute inset-0 bg-gradient-to-b from-theme-surface to-theme-bg"></div>
+@php
+    $heroImages = [
+        'images/pantheon-hero/ext-1.jpg',
+        'images/pantheon-hero/int-1.jpg',
+        'images/pantheon-hero/ext-2.jpg',
+        'images/pantheon-hero/int-2.jpg',
+        'images/pantheon-hero/ext-3.jpg',
+        'images/pantheon-hero/int-3.jpg',
+        'images/pantheon-hero/ext-4.jpg',
+        'images/pantheon-hero/int-4.jpg',
+        'images/pantheon-hero/ext-5.jpg',
+        'images/pantheon-hero/int-5.jpg',
+    ];
+@endphp
 
-        <div class="relative max-w-container mx-auto px-4 py-24 sm:py-32 text-center">
-            <h1 class="text-4xl sm:text-5xl font-extrabold tracking-tight text-theme-ink">
+@section('content')
+    <section id="hero-carousel" class="relative h-[520px] sm:h-[620px] lg:h-[680px] overflow-hidden">
+        @foreach ($heroImages as $index => $image)
+            <img src="{{ asset($image) }}" alt="The Pantheon in Rome"
+                 class="hero-slide absolute inset-0 h-full w-full object-cover transition-opacity duration-1000 ease-in-out {{ $index === 0 ? 'opacity-100' : 'opacity-0' }}">
+        @endforeach
+
+        <div class="absolute inset-0 bg-gradient-to-b from-black/60 via-black/40 to-theme-bg"></div>
+
+        <div class="relative h-full max-w-container mx-auto px-4 flex flex-col items-center justify-center text-center">
+            <h1 class="text-4xl sm:text-5xl font-extrabold tracking-tight text-white">
                 Stories worth listening to
             </h1>
-            <p class="mt-4 text-lg text-theme-body max-w-xl mx-auto">
+            <p class="mt-4 text-lg text-white/80 max-w-xl mx-auto">
                 Read the article, or press play and let the audio guide take you there &mdash; in the language you
                 choose.
             </p>
@@ -20,6 +40,17 @@
                 </svg>
             </a>
         </div>
+
+        <div class="absolute bottom-5 inset-x-0 flex items-center justify-center gap-1.5">
+            @foreach ($heroImages as $index => $image)
+                <span class="hero-dot size-1.5 rounded-full transition-colors {{ $index === 0 ? 'bg-white' : 'bg-white/40' }}"></span>
+            @endforeach
+        </div>
+
+        <a href="https://commons.wikimedia.org" target="_blank" rel="noopener"
+           class="absolute bottom-2 right-3 text-[11px] text-white/50 hover:text-white/80 transition-colors">
+            Photos: Wikimedia Commons
+        </a>
     </section>
 
     <section id="latest" class="max-w-container mx-auto px-4 py-12 sm:py-16">
@@ -42,4 +73,36 @@
             </div>
         @endif
     </section>
+@endsection
+
+@section('JScript')
+    <script>
+        (function () {
+            if (window.__heroCarouselInitialized) return;
+            window.__heroCarouselInitialized = true;
+
+            const slides = document.querySelectorAll('.hero-slide');
+            const dots = document.querySelectorAll('.hero-dot');
+            if (slides.length < 2) return;
+
+            let active = 0;
+
+            function render() {
+                slides.forEach((slide, i) => {
+                    slide.style.opacity = i === active ? '1' : '0';
+                });
+                dots.forEach((dot, i) => {
+                    dot.classList.toggle('bg-white', i === active);
+                    dot.classList.toggle('bg-white/40', i !== active);
+                });
+            }
+
+            render();
+
+            setInterval(function () {
+                active = (active + 1) % slides.length;
+                render();
+            }, 3000);
+        })();
+    </script>
 @endsection
