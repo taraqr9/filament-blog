@@ -67,22 +67,15 @@ class UserResource extends Resource
                     FileUpload::make('avatar')
                         ->nullable()
                         ->image()
-                        ->imageEditor(),
+                        ->imageEditor()
+                        ->columnSpanFull(),
                     Radio::make('status')
                         ->options(UserStatus::class)
                         ->default(UserStatus::Active)
                         ->columnSpanFull()
                         ->required(),
-                    Select::make('places')
-                        ->label('Accessible Places')
-                        ->helperText('Only these places will be visible to this user.')
-                        ->relationship('places', 'title')
-                        ->multiple()
-                        ->preload()
-                        ->searchable()
-                        ->columnSpanFull(),
                 ])
-                    ->columns(2)
+                    ->columns(3)
                     ->columnSpanFull(),
 
             ]);

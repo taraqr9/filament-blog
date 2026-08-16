@@ -111,17 +111,6 @@ class PlaceResource extends Resource
                             ->addActionLabel('Add another audio')
                             ->hiddenLabel(),
                     ]),
-
-                Section::make('Access')
-                    ->description('Only assigned tourists can view this place.')
-                    ->schema([
-                        Select::make('users')
-                            ->relationship('users', 'name')
-                            ->multiple()
-                            ->preload()
-                            ->searchable()
-                            ->hiddenLabel(),
-                    ]),
             ]);
     }
 
@@ -143,9 +132,6 @@ class PlaceResource extends Resource
                 TextColumn::make('audios_count')
                     ->label('Audio guides')
                     ->counts('audios'),
-                TextColumn::make('users_count')
-                    ->label('Assigned users')
-                    ->counts('users'),
                 StatusColumn::make(),
             ])
             ->defaultSort('sort_order')
