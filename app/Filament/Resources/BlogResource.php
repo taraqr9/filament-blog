@@ -17,13 +17,11 @@ use Filament\Forms\Components\RichEditor;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
 use Filament\Resources\Resource;
-use Filament\Schemas\Components\Grid;
 use Filament\Schemas\Components\Section;
 use Filament\Schemas\Components\Utilities\Get;
 use Filament\Schemas\Components\Utilities\Set;
 use Filament\Schemas\Schema;
 use Filament\Tables\Columns\TextColumn;
-use Filament\Tables\Filters\SelectFilter;
 use Filament\Tables\Table;
 use Illuminate\Support\Str;
 
@@ -56,34 +54,6 @@ class BlogResource extends Resource
                         })
                         ->required(),
 
-                    Select::make('category_id')
-                        ->relationship('category', 'name')
-                        ->createOptionForm([
-                            Grid::make(2)->schema([
-                                TextInput::make('name')
-                                    ->live(onBlur: true)
-                                    ->afterStateUpdated(function (
-                                        Get $get,
-                                        Set $set,
-                                        ?string $old,
-                                        ?string $state
-                                    ) {
-                                        if (($get('slug') ?? '') !== Str::slug($old)) {
-                                            return;
-                                        }
-
-                                        $set('slug', Str::slug($state));
-                                    })
-                                    ->required(),
-
-                                TextInput::make('slug')->required(),
-                            ]),
-                            RichEditor::make('description')->nullable()->columnSpanFull(),
-                        ])
-                        ->preload()
-                        ->searchable()
-                        ->required(),
-
                     Select::make('status')
                         ->options(BlogStatus::class)
                         ->default(BlogStatus::Published)
@@ -110,16 +80,11 @@ class BlogResource extends Resource
             ->columns([
                 TextColumn::make('title')
                     ->searchable(),
-                TextColumn::make('category.name')
-                    ->badge()
-                    ->color('gray')
-                    ->searchable(),
                 BlogStatusColumn::make(),
             ])
             ->defaultSort('created_at', 'desc')
             ->filters([
-                SelectFilter::make('Category')
-                    ->relationship('category', 'name'),
+                //
             ])
             ->actions([
                 ViewAction::make(),

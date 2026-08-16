@@ -1,5 +1,3 @@
-@php use App\Models\Category; @endphp
-@php use App\Enums\Status; @endphp
 <nav class="bg-gray-50 dark:bg-gray-800 fixed top-0 left-0 w-full z-50 shadow-md">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="flex justify-between h-16 items-center">
@@ -18,17 +16,7 @@
             <div class="hidden md:flex items-center space-x-6">
                 <a href="{{ route('home') }}" class="text-gray-300 hover:text-blue-500">Home</a>
 
-                <!-- Dropdown 1 -->
-                <div class="relative group">
-                    <a href="{{ route('blog.index') }}"
-                       class="text-gray-300 hover:text-blue-500 focus:outline-none">Blogs</a>
-                    <div class="absolute left-0 hidden group-hover:flex flex-col bg-white shadow-lg rounded-md w-40">
-                        @foreach(Category::where('status', Status::Active)->get() as $category)
-                            <a href="{{ route('blog.index', ['slug' => $category->slug]) }}"
-                               class="block px-4 py-2 hover:bg-gray-200 rounded-md">{{ $category->name }}</a>
-                        @endforeach
-                    </div>
-                </div>
+                <a href="{{ route('blog.index') }}" class="text-gray-300 hover:text-blue-500">Blogs</a>
 
                 <a href="{{ route('about') }}" class="text-gray-300 hover:text-blue-500">About</a>
 

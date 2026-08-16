@@ -4,7 +4,6 @@ namespace Database\Factories;
 
 use App\Enums\BlogStatus;
 use App\Models\Blog;
-use App\Models\Category;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
@@ -20,7 +19,6 @@ class BlogFactory extends Factory
     {
         return [
             'user_id' => User::inRandomOrder()->first()->id,
-            'category_id' => Category::inRandomOrder()->first()->id,
             'title' => fake()->sentence(10),
             'slug' => fake()->slug(),
             'content' => fake()->text(),

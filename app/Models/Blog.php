@@ -10,7 +10,6 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 /**
  * @property int $user_id
- * @property int $category_id
  * @property string $thumbnail
  * @property string $title
  * @property string $slug
@@ -46,10 +45,5 @@ class Blog extends Model
     public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);
-    }
-
-    public function category(): BelongsTo
-    {
-        return $this->belongsTo(Category::class);
     }
 }
