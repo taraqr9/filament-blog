@@ -1,8 +1,8 @@
 <header class="sticky top-0 z-50 py-2.5 px-4">
     <div class="max-w-container mx-auto">
         <div class="flex items-center justify-between gap-4 h-16 px-5 rounded-full border border-white/10 bg-theme-bg/70 backdrop-blur-md backdrop-saturate-150 shadow-theme-header">
-            <a href="{{ route('home') }}" class="flex items-center gap-2 text-theme-ink font-extrabold text-lg tracking-tight shrink-0">
-                {{ config('app.name') }}
+            <a href="{{ route('home') }}" class="flex items-center gap-2 shrink-0">
+                <img src="{{ asset('images/logo-nav.png') }}" alt="{{ config('app.name') }}" class="h-14 w-auto">
             </a>
 
             <nav class="hidden md:flex items-center gap-8">

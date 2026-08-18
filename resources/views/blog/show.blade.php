@@ -26,34 +26,32 @@
 
         @if ($galleryPaths->isNotEmpty())
             <div class="max-w-4xl mx-auto mb-10">
-                <div id="blog-carousel" class="relative rounded-theme overflow-hidden border border-theme-line bg-theme-surface">
-                    <div id="carousel-track" class="flex overflow-x-auto snap-x snap-mandatory no-scrollbar scroll-smooth">
-                        @foreach ($galleryPaths as $path)
-                            <div class="min-w-full snap-center aspect-video sm:aspect-[16/8]">
-                                <img src="{{ url('storage/'.$path) }}" alt="{{ $blog->title }}"
-                                     class="h-full w-full object-cover">
-                            </div>
-                        @endforeach
-                    </div>
+                <div id="blog-carousel"
+                     class="relative aspect-video sm:aspect-[16/8] rounded-theme overflow-hidden border border-theme-line bg-theme-surface">
+                    @foreach ($galleryPaths as $index => $path)
+                        <img src="{{ url('storage/'.$path) }}" alt="{{ $blog->title }}"
+                             style="opacity: {{ $index === 0 ? 1 : 0 }}; transform: scale({{ $index === 0 ? 1.08 : 1 }});"
+                             class="blog-slide absolute inset-0 h-full w-full object-cover will-change-transform transition-[opacity,transform] duration-[1200ms,6000ms] ease-out">
+                    @endforeach
 
                     @if ($galleryPaths->count() > 1)
                         <button type="button" id="carousel-prev" aria-label="Previous image"
-                                class="absolute left-3 top-1/2 -translate-y-1/2 size-9 rounded-full bg-black/50 backdrop-blur-md text-white flex items-center justify-center hover:bg-black/70 transition-colors">
-                            <svg class="size-5" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor">
+                                class="absolute left-3 top-1/2 -translate-y-1/2 size-10 rounded-full bg-black/50 backdrop-blur-md text-white flex items-center justify-center hover:bg-black/70 transition-colors">
+                            <svg class="size-7" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor">
                                 <path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7" />
                             </svg>
                         </button>
                         <button type="button" id="carousel-next" aria-label="Next image"
-                                class="absolute right-3 top-1/2 -translate-y-1/2 size-9 rounded-full bg-black/50 backdrop-blur-md text-white flex items-center justify-center hover:bg-black/70 transition-colors">
-                            <svg class="size-5" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor">
+                                class="absolute right-3 top-1/2 -translate-y-1/2 size-10 rounded-full bg-black/50 backdrop-blur-md text-white flex items-center justify-center hover:bg-black/70 transition-colors">
+                            <svg class="size-7" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor">
                                 <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7" />
                             </svg>
                         </button>
 
-                        <div id="carousel-dots" class="absolute bottom-3 inset-x-0 flex items-center justify-center gap-1.5">
+                        <div id="carousel-dots" class="absolute bottom-3 inset-x-0 flex items-center justify-center gap-2">
                             @foreach ($galleryPaths as $index => $path)
                                 <button type="button" data-index="{{ $index }}"
-                                        class="carousel-dot size-2 rounded-full bg-white/40 hover:bg-white/70 transition-colors"
+                                        class="carousel-dot h-1.5 rounded-full transition-all duration-500 {{ $index === 0 ? 'w-8 bg-white' : 'w-1.5 bg-white/40' }}"
                                         aria-label="Go to image {{ $index + 1 }}"></button>
                             @endforeach
                         </div>
@@ -103,17 +101,22 @@
                         </div>
                     </div>
 
-                    <button type="button" id="audio-mute" aria-label="Mute"
-                            class="shrink-0 text-theme-muted hover:text-theme-ink transition-colors">
-                        <svg id="audio-icon-volume" class="size-5" fill="none" viewBox="0 0 24 24" stroke-width="1.8" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" d="M11 5 6 9H2v6h4l5 4V5Z" />
-                            <path stroke-linecap="round" stroke-linejoin="round" d="M16.5 8.5a5 5 0 010 7" />
-                        </svg>
-                        <svg id="audio-icon-muted" class="size-5 hidden" fill="none" viewBox="0 0 24 24" stroke-width="1.8" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" d="M11 5 6 9H2v6h4l5 4V5Z" />
-                            <path stroke-linecap="round" stroke-linejoin="round" d="M17 9l4 6m0-6l-4 6" />
-                        </svg>
-                    </button>
+                    <div class="shrink-0 flex items-center gap-2">
+                        <button type="button" id="audio-mute" aria-label="Mute"
+                                class="text-theme-muted hover:text-theme-ink transition-colors">
+                            <svg id="audio-icon-volume" class="size-5" fill="none" viewBox="0 0 24 24" stroke-width="1.8" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M11 5 6 9H2v6h4l5 4V5Z" />
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M16.5 8.5a5 5 0 010 7" />
+                            </svg>
+                            <svg id="audio-icon-muted" class="size-5 hidden" fill="none" viewBox="0 0 24 24" stroke-width="1.8" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M11 5 6 9H2v6h4l5 4V5Z" />
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M17 9l4 6m0-6l-4 6" />
+                            </svg>
+                        </button>
+                        <input type="range" id="audio-volume" min="0" max="1" step="0.01" value="1"
+                               aria-label="Volume"
+                               class="w-20 h-1.5 accent-theme-primary cursor-pointer">
+                    </div>
                 </div>
 
                 <audio id="audio-player" preload="metadata" class="hidden">
@@ -144,44 +147,58 @@
 @section('JScript')
     <script>
         (function () {
-            const track = document.getElementById('carousel-track');
-            if (!track) return;
+            const container = document.getElementById('blog-carousel');
+            if (!container) return;
 
+            const slides = container.querySelectorAll('.blog-slide');
+            const dots = document.querySelectorAll('.carousel-dot');
             const prevBtn = document.getElementById('carousel-prev');
             const nextBtn = document.getElementById('carousel-next');
-            const dots = document.querySelectorAll('.carousel-dot');
+            if (slides.length < 2) return;
 
-            function slideWidth() {
-                return track.clientWidth;
-            }
+            let active = 0;
+            let timer;
 
-            function goTo(index) {
-                track.scrollTo({left: index * slideWidth(), behavior: 'smooth'});
-            }
-
-            function currentIndex() {
-                return Math.round(track.scrollLeft / slideWidth());
-            }
-
-            function updateDots() {
-                const active = currentIndex();
+            function render() {
+                slides.forEach((slide, i) => {
+                    const isActive = i === active;
+                    slide.style.opacity = isActive ? '1' : '0';
+                    slide.style.transform = isActive ? 'scale(1.08)' : 'scale(1)';
+                });
                 dots.forEach((dot, i) => {
-                    dot.classList.toggle('bg-white', i === active);
-                    dot.classList.toggle('bg-white/40', i !== active);
+                    const isActive = i === active;
+                    dot.classList.toggle('bg-white', isActive);
+                    dot.classList.toggle('w-8', isActive);
+                    dot.classList.toggle('bg-white/40', !isActive);
+                    dot.classList.toggle('w-1.5', !isActive);
                 });
             }
 
-            prevBtn?.addEventListener('click', () => goTo(Math.max(0, currentIndex() - 1)));
-            nextBtn?.addEventListener('click', () => goTo(Math.min(dots.length - 1, currentIndex() + 1)));
-            dots.forEach((dot) => dot.addEventListener('click', () => goTo(parseInt(dot.dataset.index, 10))));
+            function goTo(index) {
+                active = (index + slides.length) % slides.length;
+                render();
+            }
 
-            let scrollTimeout;
-            track.addEventListener('scroll', () => {
-                clearTimeout(scrollTimeout);
-                scrollTimeout = setTimeout(updateDots, 100);
+            function restartTimer() {
+                clearInterval(timer);
+                timer = setInterval(() => goTo(active + 1), 3000);
+            }
+
+            prevBtn?.addEventListener('click', () => {
+                goTo(active - 1);
+                restartTimer();
             });
+            nextBtn?.addEventListener('click', () => {
+                goTo(active + 1);
+                restartTimer();
+            });
+            dots.forEach((dot) => dot.addEventListener('click', () => {
+                goTo(parseInt(dot.dataset.index, 10));
+                restartTimer();
+            }));
 
-            updateDots();
+            render();
+            restartTimer();
         })();
 
         (function () {
@@ -196,6 +213,7 @@
             const muteBtn = document.getElementById('audio-mute');
             const iconVolume = document.getElementById('audio-icon-volume');
             const iconMuted = document.getElementById('audio-icon-muted');
+            const volumeSlider = document.getElementById('audio-volume');
             const progressTrack = document.getElementById('audio-progress-track');
             const progressFill = document.getElementById('audio-progress-fill');
             const progressHandle = document.getElementById('audio-progress-handle');
@@ -260,11 +278,24 @@
                 isDragging = false;
             });
 
+            function updateVolumeUI() {
+                const isMuted = player.muted || player.volume === 0;
+                iconVolume.classList.toggle('hidden', isMuted);
+                iconMuted.classList.toggle('hidden', !isMuted);
+            }
+
             muteBtn.addEventListener('click', function () {
                 player.muted = !player.muted;
-                iconVolume.classList.toggle('hidden', player.muted);
-                iconMuted.classList.toggle('hidden', !player.muted);
+                updateVolumeUI();
             });
+
+            volumeSlider.addEventListener('input', function () {
+                player.volume = parseFloat(this.value);
+                player.muted = false;
+                updateVolumeUI();
+            });
+
+            updateVolumeUI();
 
             select?.addEventListener('change', function () {
                 const wasPlaying = !player.paused;

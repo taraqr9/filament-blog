@@ -2,11 +2,12 @@
 
 @section('content')
     <section class="min-h-[calc(100vh-6rem)] flex items-center justify-center px-4 py-16">
+        <a href="{{ route('home') }}" class="inline-block">
+            <img src="{{ asset('images/logo-nav.png') }}" alt="{{ config('app.name') }}" class="h-20 w-auto mx-auto">
+        </a>
+
         <div class="w-full max-w-md">
             <div class="text-center mb-8">
-                <a href="{{ route('home') }}" class="text-theme-ink font-extrabold text-lg tracking-tight">
-                    {{ config('app.name') }}
-                </a>
                 <h1 class="mt-4 text-3xl font-extrabold tracking-tight text-theme-ink">Welcome back</h1>
                 <p class="mt-2 text-sm text-theme-muted">Sign in to continue reading and listening.</p>
             </div>

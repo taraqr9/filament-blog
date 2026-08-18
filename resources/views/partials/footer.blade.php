@@ -2,7 +2,9 @@
     <div class="max-w-container mx-auto px-4 py-12">
         <div class="grid grid-cols-1 sm:grid-cols-3 gap-8">
             <div>
-                <a href="{{ route('home') }}" class="text-lg font-extrabold text-white">{{ config('app.name') }}</a>
+                <a href="{{ route('home') }}" class="inline-block">
+                    <img src="{{ asset('images/logo-footer.png') }}" alt="{{ config('app.name') }}" class="h-12 w-auto">
+                </a>
                 <p class="mt-3 text-sm text-theme-muted max-w-xs">
                     Stories, guides, and audio narration to help you explore places from anywhere.
                 </p>
