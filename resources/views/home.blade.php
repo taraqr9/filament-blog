@@ -2,21 +2,20 @@
 
 @section('content')
     <section id="hero-carousel" class="max-w-container mx-auto px-4 pt-8 sm:pt-12">
-        <x-hero-carousel />
+        <x-hero-carousel :images="$slider_images" />
     </section>
 
     <section id="explore" class="max-w-container mx-auto px-4 pt-12 sm:pt-16 text-center">
         <span class="inline-flex items-center gap-2 text-xs sm:text-sm font-semibold uppercase tracking-[0.35em] text-theme-primary">
             <span class="h-px w-8 bg-theme-primary/50"></span>
-            Rome &middot; Italy
+            Tashfia Tabassum
             <span class="h-px w-8 bg-theme-primary/50"></span>
         </span>
         <h1 class="mt-6 text-4xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight text-theme-ink max-w-3xl mx-auto">
-            Stories worth listening to
+            Stories worth reading
         </h1>
         <p class="mt-6 text-lg sm:text-xl text-theme-muted max-w-2xl mx-auto">
-            Read the article, or press play and let the audio guide take you there &mdash; in the language you
-            choose.
+            Welcome to my personal corner of the internet &mdash; a place to share stories, thoughts, and updates.
         </p>
         <a href="#latest"
            class="mt-10 inline-flex items-center gap-2 rounded-full bg-theme-primary px-8 py-3.5 text-sm font-bold text-white shadow-theme-lg hover:bg-theme-primary-dark hover:scale-[1.03] transition-all">

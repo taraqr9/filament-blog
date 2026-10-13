@@ -1,7 +1,6 @@
 <?php
 
 use Illuminate\Database\Migrations\Migration;
-use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
@@ -11,15 +10,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('blog_audios', function (Blueprint $table) {
-            $table->id();
-            $table->foreignId('blog_id')->constrained()->cascadeOnDelete();
-            $table->string('language');
-            $table->string('audio_path');
-            $table->unsignedInteger('sort_order')->default(0);
-            $table->timestamps();
-            $table->softDeletes();
-        });
+        // Audio narration feature removed; the blog_audios table is no longer created.
     }
 
     /**

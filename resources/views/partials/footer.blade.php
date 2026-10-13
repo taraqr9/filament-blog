@@ -3,10 +3,10 @@
         <div class="grid grid-cols-1 sm:grid-cols-3 gap-8">
             <div>
                 <a href="{{ route('home') }}" class="inline-block">
-                    <img src="{{ asset('images/logo-footer.png') }}" alt="{{ config('app.name') }}" class="h-12 w-auto">
+                    <img src="{{ asset('images/tashfia-logo.png') }}" alt="Tashfia Tabassum" class="h-12 w-auto">
                 </a>
                 <p class="mt-3 text-sm text-theme-muted max-w-xs">
-                    Stories, guides, and audio narration to help you explore places from anywhere.
+                    Thoughts, stories, and updates from Tashfia Tabassum.
                 </p>
             </div>
 
@@ -19,19 +19,15 @@
                 </ul>
             </div>
 
-            <div>
-                <h3 class="text-sm font-semibold text-white uppercase tracking-wide">Account</h3>
-                <ul class="mt-4 space-y-2.5">
-                    @guest()
-                        <li><a href="{{ route('filament.admin.auth.login') }}"
-                               class="text-sm text-theme-muted hover:text-white transition-colors">Sign in</a></li>
-                    @endguest
-                    @auth()
+            @auth()
+                <div>
+                    <h3 class="text-sm font-semibold text-white uppercase tracking-wide">Account</h3>
+                    <ul class="mt-4 space-y-2.5">
                         <li><a href="{{ route('profile') }}"
                                class="text-sm text-theme-muted hover:text-white transition-colors">My Profile</a></li>
-                    @endauth
-                </ul>
-            </div>
+                    </ul>
+                </div>
+            @endauth
         </div>
 
         <div class="mt-10 pt-6 border-t border-theme-line text-center text-sm text-theme-muted">

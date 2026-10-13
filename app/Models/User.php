@@ -5,6 +5,7 @@ namespace App\Models;
 use App\Enums\UserStatus;
 use Database\Factories\UserFactory;
 use Filament\Models\Contracts\FilamentUser;
+use Filament\Models\Contracts\HasAvatar;
 use Filament\Panel;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\HasMany;
@@ -21,7 +22,7 @@ use Spatie\Permission\Traits\HasRoles;
  * @property string $avatar
  * @property UserStatus $status
  */
-class User extends Authenticatable implements FilamentUser
+class User extends Authenticatable implements FilamentUser, HasAvatar
 {
     /** @use HasFactory<UserFactory> */
     use HasFactory, HasRoles, Notifiable;
@@ -74,6 +75,11 @@ class User extends Authenticatable implements FilamentUser
     public function canAccessPanel(Panel $panel): bool
     {
         return $this->status == UserStatus::Active;
+    }
+
+    public function getFilamentAvatarUrl(): ?string
+    {
+        return $this->avatar ? asset('storage/'.$this->avatar) : null;
     }
 
     public function blogs(): HasMany

@@ -2,7 +2,7 @@
     <div class="max-w-container mx-auto">
         <div class="flex items-center justify-between gap-4 h-16 px-5 rounded-full border border-white/10 bg-theme-bg/70 backdrop-blur-md backdrop-saturate-150 shadow-theme-header">
             <a href="{{ route('home') }}" class="flex items-center gap-2 shrink-0">
-                <img src="{{ asset('images/logo-nav.png') }}" alt="{{ config('app.name') }}" class="h-14 w-auto">
+                <img src="{{ asset('images/tashfia-logo.png') }}" alt="Tashfia Tabassum" class="h-14 w-auto">
             </a>
 
             <nav class="hidden md:flex items-center gap-8">
@@ -15,13 +15,6 @@
             </nav>
 
             <div class="hidden md:flex items-center gap-3 shrink-0">
-                @guest()
-                    <a href="{{ route('login') }}"
-                       class="inline-flex items-center gap-2 rounded-full bg-theme-primary px-[18px] py-[10px] text-sm font-bold text-white hover:bg-theme-primary-dark transition-colors">
-                        Sign in
-                    </a>
-                @endguest
-
                 @auth()
                     <div class="relative group">
                         <button type="button"
@@ -64,11 +57,6 @@
                 <a href="{{ route('home') }}" class="px-5 py-3.5 text-sm font-medium text-theme-body hover:text-theme-ink">Home</a>
                 <a href="{{ route('blog.index') }}" class="px-5 py-3.5 text-sm font-medium text-theme-body hover:text-theme-ink">Blogs</a>
                 <a href="{{ route('about') }}" class="px-5 py-3.5 text-sm font-medium text-theme-body hover:text-theme-ink">About</a>
-
-                @guest()
-                    <a href="{{ route('login') }}"
-                       class="px-5 py-3.5 text-sm font-bold text-theme-primary">Sign in</a>
-                @endguest
 
                 @auth()
                     <a href="{{ route('profile') }}" class="px-5 py-3.5 text-sm font-medium text-theme-body hover:text-theme-ink">My

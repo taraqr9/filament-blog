@@ -4,7 +4,7 @@
     <section class="max-w-container mx-auto px-4 py-12 sm:py-16">
         <div class="mb-10">
             <h1 class="text-3xl sm:text-4xl font-extrabold text-theme-ink tracking-tight">All Blogs</h1>
-            <p class="mt-2 text-theme-muted">Stories and audio guides, all in one place.</p>
+            <p class="mt-2 text-theme-muted">Stories and updates, all in one place.</p>
         </div>
 
         @if ($blogs->isEmpty())

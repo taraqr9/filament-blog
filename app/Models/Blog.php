@@ -55,9 +55,4 @@ class Blog extends Model
     {
         return $this->hasMany(BlogImage::class)->orderBy('sort_order');
     }
-
-    public function audios(): HasMany
-    {
-        return $this->hasMany(BlogAudio::class)->orderBy('sort_order');
-    }
 }

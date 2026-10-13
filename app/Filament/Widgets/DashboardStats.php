@@ -10,6 +10,11 @@ class DashboardStats extends BaseWidget
 {
     protected static ?int $sort = 1;
 
+    public static function canView(): bool
+    {
+        return (bool) auth()->user()?->can('ViewAny:User');
+    }
+
     protected function getStats(): array
     {
 

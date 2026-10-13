@@ -28,14 +28,27 @@
                 </div>
 
                 <div class="mb-4">
-                    <label class="block text-gray-700 font-semibold mb-2">New Password</label>
-                    <input type="password" name="password"
+                    <label class="block text-gray-700 font-semibold mb-2">Current Password</label>
+                    <input type="password" name="current_password" autocomplete="current-password"
                            class="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500">
+                    <p class="mt-1 text-sm text-gray-500">Required only if you're setting a new password below.</p>
+                    @error('current_password')
+                        <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
+                    @enderror
+                </div>
+
+                <div class="mb-4">
+                    <label class="block text-gray-700 font-semibold mb-2">New Password</label>
+                    <input type="password" name="password" autocomplete="new-password"
+                           class="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500">
+                    @error('password')
+                        <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
+                    @enderror
                 </div>
 
                 <div class="mb-4">
                     <label class="block text-gray-700 font-semibold mb-2">Confirm Password</label>
-                    <input type="password" name="password_confirmation"
+                    <input type="password" name="password_confirmation" autocomplete="new-password"
                            class="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500">
                 </div>
 

@@ -9,11 +9,6 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', [HomeController::class, 'index'])->name('home');
 
-Route::middleware(['guest'])->group(function () {
-    Route::get('/login', [AuthController::class, 'showLogin'])->name('login');
-    Route::post('/login', [AuthController::class, 'login'])->middleware('throttle:5,1')->name('login.attempt');
-});
-
 Route::post('/logout', [AuthController::class, 'logout'])->middleware('auth')->name('logout');
 
 Route::group(['middleware' => ['auth']], function () {
@@ -25,7 +20,6 @@ Route::group(['middleware' => ['auth']], function () {
 
 Route::prefix('blogs')->group(function () {
     Route::get('/', [BlogController::class, 'index'])->name('blog.index');
-    Route::get('/audio/{blogAudio}', [BlogController::class, 'audio'])->name('blog.audio');
     Route::get('/{slug}', [BlogController::class, 'show'])->name('blog.show');
 });
 

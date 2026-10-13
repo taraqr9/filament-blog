@@ -2,7 +2,7 @@
 
 @section('content')
     <section class="max-w-container mx-auto px-4 pt-8 sm:pt-12">
-        <x-hero-carousel />
+        <x-hero-carousel :images="$slider_images" />
     </section>
 
     <section class="max-w-container mx-auto px-4 py-12 sm:py-16 text-center">
@@ -12,23 +12,16 @@
             <span class="h-px w-8 bg-theme-primary/50"></span>
         </span>
         <h1 class="mt-6 text-4xl sm:text-5xl font-extrabold tracking-tight text-theme-ink max-w-2xl mx-auto">
-            The story behind the stories
+            About Tashfia Tabassum
         </h1>
 
         <div class="mt-8 max-w-2xl mx-auto space-y-5 text-left text-theme-body leading-relaxed">
             <p>
-                Rome rewards the curious &mdash; but its history rarely fits on a plaque. This project was built to
-                close that gap: real places, told as stories, with the option to simply press play and let an
-                audio guide walk you through it while you look up rather than down at a screen.
+                Welcome! This is Tashfia Tabassum's personal website &mdash; a space for sharing stories, thoughts,
+                and updates.
             </p>
             <p>
-                Every post pairs a written article with a narrated version, recorded in multiple languages, so the
-                experience travels with you &mdash; whether you're reading at home before a trip or standing in
-                front of the Pantheon with your phone in your pocket and your headphones in.
-            </p>
-            <p>
-                It's a small, growing collection for now. New places and new languages get added as they're
-                researched, written, and recorded properly &mdash; not rushed.
+                More details about Tashfia will be added here soon.
             </p>
         </div>
 

@@ -17,6 +17,7 @@ class ProfileUpdateRequest extends FormRequest
             'name' => 'required|string|max:255',
             'email' => 'required|string|email|max:255',
             'phone' => 'nullable|digits:11',
+            'current_password' => ['required_with:password', 'current_password'],
             'password' => 'nullable|string|min:6|confirmed',
         ];
     }

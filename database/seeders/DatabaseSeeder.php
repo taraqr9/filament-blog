@@ -23,5 +23,20 @@ class DatabaseSeeder extends Seeder
             ])
         );
         $superAdmin->syncRoles('super_admin');
+
+        $blogAdmin = User::firstOrCreate(
+            ['username' => 'tashfia'],
+            User::factory()->raw([
+                'username' => 'tashfia',
+                'name' => 'Tashfia Tabassum',
+                'email' => 'tashfia@user.com',
+                'avatar' => 'avatars/tashfia-logo.png',
+                'password' => bcrypt('secret'),
+                'status' => UserStatus::Active,
+            ])
+        );
+        $blogAdmin->syncRoles('admin');
+
+        $this->call(SliderSeeder::class);
     }
 }

@@ -2,9 +2,9 @@
 
 namespace App\Filament\Resources;
 
+use App\Enums\BlogStatus;
 use App\Filament\Resources\BlogResource\Pages;
 use App\Models\Blog;
-use App\Models\BlogAudio;
 use BackedEnum;
 use Filament\Actions\BulkActionGroup;
 use Filament\Actions\DeleteAction;
@@ -16,9 +16,9 @@ use Filament\Actions\RestoreAction;
 use Filament\Actions\RestoreBulkAction;
 use Filament\Actions\ViewAction;
 use Filament\Forms\Components\FileUpload;
+use Filament\Forms\Components\Radio;
 use Filament\Forms\Components\Repeater;
 use Filament\Forms\Components\RichEditor;
-use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
 use Filament\Resources\Resource;
 use Filament\Schemas\Components\Section;
@@ -70,6 +70,28 @@ class BlogResource extends Resource
                         ->required()
                         ->columnSpanFull(),
 
+                    Radio::make('status')
+                        ->label('Visibility')
+                        ->options([
+                            BlogStatus::Published->value => 'Active',
+                            BlogStatus::Private->value => 'Inactive',
+                        ])
+                        ->descriptions([
+                            BlogStatus::Published->value => 'Visible on the public website.',
+                            BlogStatus::Private->value => 'Saved, but hidden from the public website.',
+                        ])
+                        ->default(BlogStatus::Published->value)
+                        ->afterStateHydrated(function (Radio $component, ?Blog $record) {
+                            $component->state(
+                                $record?->status === BlogStatus::Private
+                                    ? BlogStatus::Private->value
+                                    : BlogStatus::Published->value
+                            );
+                        })
+                        ->inline()
+                        ->required()
+                        ->columnSpanFull(),
+
                     FileUpload::make('thumbnail')
                         ->image()
                         ->imageEditor()
@@ -91,25 +113,6 @@ class BlogResource extends Resource
                         ->orderColumn('sort_order')
                         ->addActionLabel('Add another image')
                         ->columnSpanFull(),
-
-                    Repeater::make('audios')
-                        ->relationship('audios')
-                        ->label('Audio Files')
-                        ->schema([
-                            Select::make('language')
-                                ->options(BlogAudio::languageOptions())
-                                ->searchable()
-                                ->required(),
-                            FileUpload::make('audio_path')
-                                ->label('Audio file')
-                                ->acceptedFileTypes(['audio/*'])
-                                ->required(),
-                        ])
-                        ->columns(2)
-                        ->reorderable()
-                        ->orderColumn('sort_order')
-                        ->addActionLabel('Add another audio')
-                        ->columnSpanFull(),
                 ])
                     ->columns(3)
                     ->columnSpanFull(),
@@ -124,6 +127,22 @@ class BlogResource extends Resource
                     ->label('Thumbnail'),
                 TextColumn::make('title')
                     ->searchable(),
+                TextColumn::make('user.username')
+                    ->label('Created By')
+                    ->searchable()
+                    ->visible(fn () => auth()->user()?->hasRole('super_admin')),
+                TextColumn::make('status')
+                    ->badge()
+                    ->formatStateUsing(fn (BlogStatus $state) => match ($state) {
+                        BlogStatus::Published => 'Active',
+                        BlogStatus::Private => 'Inactive',
+                        BlogStatus::Draft => 'Draft',
+                    })
+                    ->color(fn (BlogStatus $state) => match ($state) {
+                        BlogStatus::Published => 'success',
+                        BlogStatus::Private => 'warning',
+                        BlogStatus::Draft => 'gray',
+                    }),
                 TextColumn::make('created_at')
                     ->label('Created')
                     ->date()
@@ -155,10 +174,17 @@ class BlogResource extends Resource
 
     public static function getEloquentQuery(): Builder
     {
-        return parent::getEloquentQuery()
+        $query = parent::getEloquentQuery()
             ->withoutGlobalScopes([
                 SoftDeletingScope::class,
-            ]);
+            ])
+            ->with('user');
+
+        if (! auth()->user()?->hasRole('super_admin')) {
+            $query->where('user_id', auth()->id());
+        }
+
+        return $query;
     }
 
     public static function getRelations(): array
